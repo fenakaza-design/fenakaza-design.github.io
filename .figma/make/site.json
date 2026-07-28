@@ -1,0 +1,10 @@
+{
+  "description": "Showcases a senior product designer's curated portfolio with password-protected case studies.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

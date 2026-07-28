@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'DM Sans', sans-serif;
+
+  /* Token: surface-white */
+  --color-bg: #FFFFFF;
+  /* Token: surface-light */
+  --color-surface: #F1F1F1;
+  /* Token: border-subtle */
+  --color-border: #E6E6E6;
+  /* Token: text-heading */
+  --color-heading: #3B3B3B;
+  /* Token: text-body */
+  --color-body: #7A7A7A;
+  /* Token: text-inverse */
+  --color-inverse: #FFFFFF;
+  /* Token: brand.magenta */
+  --color-accent: #D6006D;
+  /* Token: brand.magenta-dark */
+  --color-accent-hover: #B0005A;
+  /* Token: header-plum */
+  --color-plum: #6E6577;
+  /* Token: hero-overlay */
+  --color-hero-overlay: #524A5CBF;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'DM Sans', sans-serif;
+  background-color: #FFFFFF;
+  color: #3B3B3B;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

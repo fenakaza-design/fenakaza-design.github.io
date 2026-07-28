@@ -1,0 +1,172 @@
+{
+  "global": {
+    "color": {
+      "brand": {
+        "magenta": { "value": "#D6006D", "type": "color", "description": "Primary accent — CTA buttons, footer background, accent words in headings" },
+        "magenta-dark": { "value": "#B0005A", "type": "color", "description": "Hover/pressed state for magenta" }
+      },
+      "neutral": {
+        "header-plum": { "value": "#6E6577", "type": "color", "description": "Top nav bar + hero overlay tint" },
+        "hero-overlay": { "value": "#524A5CBF", "type": "color", "description": "75% opacity plum wash over hero photo" },
+        "surface-light": { "value": "#F1F1F1", "type": "color", "description": "Alternating light-grey case-study section background" },
+        "surface-white": { "value": "#FFFFFF", "type": "color", "description": "Alternating white section background" },
+        "text-heading": { "value": "#3B3B3B", "type": "color" },
+        "text-body": { "value": "#7A7A7A", "type": "color" },
+        "text-inverse": { "value": "#FFFFFF", "type": "color" },
+        "border-subtle": { "value": "#E6E6E6", "type": "color" }
+      }
+    },
+    "fontFamilies": {
+      "sans": { "value": "DM Sans", "type": "fontFamilies" }
+    },
+    "fontWeights": {
+      "light": { "value": "300", "type": "fontWeights" },
+      "regular": { "value": "400", "type": "fontWeights" },
+      "medium": { "value": "500", "type": "fontWeights" },
+      "semibold": { "value": "600", "type": "fontWeights" },
+      "bold": { "value": "700", "type": "fontWeights" }
+    },
+    "fontSize": {
+      "xs": { "value": "12", "type": "fontSizes" },
+      "sm": { "value": "13", "type": "fontSizes" },
+      "base": { "value": "16", "type": "fontSizes" },
+      "md": { "value": "18", "type": "fontSizes" },
+      "lg": { "value": "24", "type": "fontSizes" },
+      "xl": { "value": "32", "type": "fontSizes" },
+      "2xl": { "value": "40", "type": "fontSizes" },
+      "3xl": { "value": "48", "type": "fontSizes" }
+    },
+    "lineHeights": {
+      "tight": { "value": "120%", "type": "lineHeights" },
+      "normal": { "value": "150%", "type": "lineHeights" },
+      "relaxed": { "value": "170%", "type": "lineHeights" }
+    },
+    "letterSpacing": {
+      "none": { "value": "0", "type": "letterSpacing" },
+      "wide": { "value": "1.5px", "type": "letterSpacing" },
+      "wider": { "value": "2.5px", "type": "letterSpacing" }
+    },
+    "spacing": {
+      "xs": { "value": "8", "type": "spacing" },
+      "sm": { "value": "16", "type": "spacing" },
+      "md": { "value": "24", "type": "spacing" },
+      "lg": { "value": "40", "type": "spacing" },
+      "xl": { "value": "64", "type": "spacing" },
+      "2xl": { "value": "96", "type": "spacing" },
+      "3xl": { "value": "140", "type": "spacing" },
+      "content-max-width": { "value": "720", "type": "spacing" }
+    },
+    "borderRadius": {
+      "pill": { "value": "24", "type": "borderRadius" },
+      "none": { "value": "0", "type": "borderRadius" }
+    },
+    "boxShadow": {
+      "image-frame": {
+        "value": { "color": "#0000002E", "type": "dropShadow", "x": "0", "y": "20", "blur": "45", "spread": "0" },
+        "type": "boxShadow",
+        "description": "Soft elevation applied to every screenshot/device mockup"
+      }
+    },
+    "typography": {
+      "nav-label": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.medium}",
+          "fontSize": "{fontSize.sm}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.wide}",
+          "textCase": "uppercase"
+        },
+        "type": "typography"
+      },
+      "hero-heading": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.light}",
+          "fontSize": "{fontSize.3xl}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.none}"
+        },
+        "type": "typography"
+      },
+      "hero-body": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSize.md}",
+          "lineHeight": "{lineHeights.relaxed}",
+          "letterSpacing": "{letterSpacing.none}"
+        },
+        "type": "typography"
+      },
+      "project-title": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSize.xl}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.none}"
+        },
+        "type": "typography",
+        "description": "Grey word + magenta accent word, e.g. 'Staples [Flightdeck Estimator]'"
+      },
+      "case-study-title": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSize.2xl}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.none}"
+        },
+        "type": "typography"
+      },
+      "section-label": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.bold}",
+          "fontSize": "{fontSize.sm}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.wider}",
+          "textCase": "uppercase"
+        },
+        "type": "typography",
+        "description": "e.g. BUSINESS NEED / SOLUTION / DELIVERED RESULTS"
+      },
+      "body-copy": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.regular}",
+          "fontSize": "{fontSize.base}",
+          "lineHeight": "{lineHeights.relaxed}",
+          "letterSpacing": "{letterSpacing.none}"
+        },
+        "type": "typography"
+      },
+      "button-label": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.semibold}",
+          "fontSize": "{fontSize.xs}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.wide}",
+          "textCase": "uppercase"
+        },
+        "type": "typography"
+      },
+      "pagination-label": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.medium}",
+          "fontSize": "{fontSize.sm}",
+          "lineHeight": "{lineHeights.tight}",
+          "letterSpacing": "{letterSpacing.none}"
+        },
+        "type": "typography"
+      }
+    }
+  },
+  "$themes": [],
+  "$metadata": {
+    "tokenSetOrder": ["global"]
+  }
+}
