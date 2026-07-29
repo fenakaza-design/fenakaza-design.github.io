@@ -8,15 +8,42 @@ type Page = 'home' | 'about' | { type: 'case-study'; id: string }
 
 const caseStudies = [
   {
-    id: 'flightdeck',
+    id: 'multilot',
     number: '01',
+    title: 'Multilot 50/50 App',
+    client: 'Multilot',
+    category: 'Mobile app · WebGL game · Live sports entertainment',
+    year: '2024',
+    tagline: 'A mobile raffle and browser-based WebGL experience that brought personalized game moments to live sports events.',
+    swatchHex: '#3D1A6B',
+    overview:
+      'Multilot 50/50 was created for online raffles during sports games. The experience combined a mobile lottery flow with a browser-based WebGL game. Players could use a selfie to generate a 3D animation that could be displayed on the venue jumbotron.',
+    context:
+      'The product needed to make a 50/50 raffle more engaging in a live sports setting while complying with local gambling regulations. The experience needed to support both the practical requirements of a regulated lottery flow and an entertaining, venue-scale game moment.',
+    role: 'Lead Product Designer',
+    approach:
+      'I mapped the raffle journey and supporting states, then translated the flow into low-fidelity wireframes and final UX/UI concepts. The work connected the mobile lottery experience with a selfie-based WebGL interaction and a jumbotron display.',
+    keyDecisions: [
+      'Create a structured mobile raffle flow — The experience was documented as a detailed lottery journey, including key user paths and supporting states.',
+      'Turn participation into a personalized live-event moment — The WebGL game used a player\'s selfie to generate a 3D animation that could be displayed on the jumbotron.',
+      'Design within a regulated product context — The product needed to comply with local gambling regulations while maintaining an engaging sports-event experience.',
+    ],
+    images: {
+      hero: '/images/multilot/hero.png',
+      flow: '/images/multilot/flow.png',
+      wireframes: '/images/multilot/wireframes.png',
+      annotated: '/images/multilot/annotated.png',
+    },
+  },
+  {
+    id: 'flightdeck',
+    number: '02',
     title: 'Flightdeck Estimator',
     client: 'Staples',
     category: 'Enterprise · B2B Tool',
     year: '2019',
     tagline: 'Redesigning a complex estimation tool for retail operations teams spread across North America.',
     swatchHex: '#2C4A7C',
-    password: 'design',
     overview:
       'The Flightdeck Estimator is an internal tool used by Staples operations managers to forecast staffing and resource needs for retail locations. When I joined the project, the process relied on a patchwork of spreadsheets, tribal knowledge, and manual reconciliation across hundreds of stores.',
     context:
@@ -36,7 +63,7 @@ const caseStudies = [
   },
   {
     id: 'msn-news',
-    number: '02',
+    number: '03',
     title: 'MSN News App',
     client: 'Microsoft',
     category: 'Consumer · Mobile',
@@ -63,7 +90,7 @@ const caseStudies = [
   },
   {
     id: 'love-mondays',
-    number: '03',
+    number: '04',
     title: 'Love Mondays',
     client: 'Glassdoor',
     category: 'Consumer · Web & Mobile',
@@ -281,7 +308,18 @@ function CaseStudyContent({
       </div>
 
       {/* ── Hero image ── */}
-      <ImagePlaceholder ratio="21/9" swatchHex={study.swatchHex} className="max-h-[560px]" />
+      <div className="max-w-5xl mx-auto px-6 md:px-12 pt-10 pb-4">
+        {study.images?.hero ? (
+          <img
+            src={study.images.hero}
+            alt={`${study.title} hero`}
+            className="w-full object-cover"
+            style={{ aspectRatio: '16/9' }}
+          />
+        ) : (
+          <ImagePlaceholder ratio="16/9" swatchHex={study.swatchHex} />
+        )}
+      </div>
 
       {/* ── Body ── */}
       <div className="max-w-5xl mx-auto px-6 md:px-12">
@@ -311,21 +349,36 @@ function CaseStudyContent({
           <p className="text-base text-[#6B6B6B] leading-relaxed">{study.context}</p>
         </ContentSection>
 
-        {/* Mid image */}
+        {/* Mid image — flow / lottery journey */}
         <div className="py-12">
-          <ImagePlaceholder ratio="3/2" swatchHex={study.swatchHex} />
+          {study.images?.flow ? (
+            <img src={study.images.flow} alt="End-to-end lottery flow" className="w-full object-contain" />
+          ) : (
+            <ImagePlaceholder ratio="3/2" swatchHex={study.swatchHex} />
+          )}
         </div>
 
         <ContentSection label="Approach">
           <p className="text-base text-[#6B6B6B] leading-relaxed">{study.approach}</p>
         </ContentSection>
 
-        {/* Second mid image */}
+        {/* Second mid image — wireframes + annotated screens */}
         <div className="py-12">
-          <div className="grid grid-cols-2 gap-4">
-            <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
-            <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
-          </div>
+          {study.images?.wireframes || study.images?.annotated ? (
+            <div className="flex flex-col gap-8">
+              {study.images.wireframes && (
+                <img src={study.images.wireframes} alt="Low-fidelity wireframes" className="w-full object-contain" />
+              )}
+              {study.images.annotated && (
+                <img src={study.images.annotated} alt="Annotated mobile UI screens" className="w-full object-contain" />
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+              <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
+              <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
+            </div>
+          )}
         </div>
 
         <ContentSection label="Key Decisions">
@@ -344,13 +397,17 @@ function CaseStudyContent({
           </ul>
         </ContentSection>
 
-        <ContentSection label="Outcomes">
-          <p className="text-base text-[#6B6B6B] leading-relaxed">{study.outcomes}</p>
-        </ContentSection>
+        {study.outcomes && (
+          <ContentSection label="Outcomes">
+            <p className="text-base text-[#6B6B6B] leading-relaxed">{study.outcomes}</p>
+          </ContentSection>
+        )}
 
-        <ContentSection label="Learnings">
-          <p className="text-base text-[#6B6B6B] leading-relaxed italic">{study.learnings}</p>
-        </ContentSection>
+        {study.learnings && (
+          <ContentSection label="Learnings">
+            <p className="text-base text-[#6B6B6B] leading-relaxed italic">{study.learnings}</p>
+          </ContentSection>
+        )}
 
         {/* ── Navigation ── */}
         <div className="py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -399,7 +456,7 @@ function CaseStudyPage({
 
   if (!study) return null
 
-  if (!unlocked) {
+  if (!unlocked && study.password) {
     return (
       <PasswordGate
         study={study}
@@ -504,24 +561,20 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
   return (
     <main>
       {/* ── Intro ── */}
-      <section className="pt-20 pb-20 md:pt-28 md:pb-24">
-        <div className="max-w-5xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-[1fr_320px] gap-12 items-end">
-            <div>
-              <SectionLabel>Product Designer</SectionLabel>
-              <h1 className="text-[38px] md:text-[52px] lg:text-[60px] font-light text-[#3B3B3B] leading-[1.1] mt-5">
-                Twenty years shaping{' '}
-                <br className="hidden md:block" />
-                digital products{' '}
-                <br className="hidden md:block" />
-                at scale.
-              </h1>
-            </div>
-            <div className="md:pb-2">
-              <p className="text-base text-[#6B6B6B] leading-relaxed">
-                I work at the intersection of systems thinking and human experience — turning complex, ambiguous problems into clear, considered design decisions.
-              </p>
-            </div>
+      <section className="pt-20 pb-20 md:pt-28 md:pb-[136px] relative overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: 'url(/images/hero-bg.jpg)' }}
+        />
+        <div className="absolute inset-0 bg-white/70" />
+        <div className="max-w-5xl mx-auto px-6 md:px-12 relative">
+          <div className="max-w-4xl">
+            <p className="text-[22px] md:text-[36px] lg:text-[44px] text-[#6B6B6B] font-light leading-tight">
+              Olá! I'm Fernanda.
+            </p>
+            <h1 className="text-[32px] font-light leading-[1.1] mt-1" style={{ color: '#D6006D' }}>
+              I help teams simplify complex workflows<br />through thoughtful product design.
+            </h1>
           </div>
         </div>
       </section>
@@ -623,9 +676,9 @@ function AboutPage() {
         <div className="pt-10">
           <SectionLabel>Documents</SectionLabel>
           <a
-            href="#"
+            href="/FernandaNakaza-Resume2026.pdf"
+            download
             className="inline-flex items-center gap-3 mt-4 group"
-            onClick={(e) => e.preventDefault()}
           >
             <span className="text-base font-medium text-[#3B3B3B] border-b border-[#3B3B3B] pb-0.5 group-hover:text-[#D6006D] group-hover:border-[#D6006D] transition-colors">
               Download Resume
@@ -634,7 +687,6 @@ function AboutPage() {
               →
             </span>
           </a>
-          <p className="text-xs text-[#767676] mt-2">PDF · Updated 2024</p>
         </div>
       </div>
     </main>
