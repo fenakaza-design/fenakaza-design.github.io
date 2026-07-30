@@ -824,15 +824,46 @@ function Footer() {
   )
 }
 
+// ─── Routing helpers ──────────────────────────────────────────────────────────
+
+function pageToPath(page: Page): string {
+  if (page === 'home') return '/'
+  if (page === 'about') return '/about'
+  return `/work/${page.id}`
+}
+
+function pathToPage(path: string): Page {
+  // Handle GitHub Pages 404 redirect
+  const redirected = new URLSearchParams(window.location.search).get('p')
+  if (redirected) {
+    window.history.replaceState(null, '', redirected)
+    return pathToPage(redirected)
+  }
+  if (path === '/about') return 'about'
+  const match = path.match(/^\/work\/(.+)$/)
+  if (match) return { type: 'case-study', id: match[1] }
+  return 'home'
+}
+
 // ─── Root ─────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [page, setPage] = useState<Page>('home')
+  const [page, setPage] = useState<Page>(() => pathToPage(window.location.pathname))
 
   const navigate = (p: Page) => {
+    window.history.pushState(null, '', pageToPath(p))
     setPage(p)
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
+
+  useEffect(() => {
+    const handlePop = () => {
+      setPage(pathToPage(window.location.pathname))
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }
+    window.addEventListener('popstate', handlePop)
+    return () => window.removeEventListener('popstate', handlePop)
+  }, [])
 
   return (
     <div
