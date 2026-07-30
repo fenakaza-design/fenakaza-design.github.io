@@ -770,7 +770,6 @@ function Nav({
             {[
               { label: 'Work', action: () => { navigate('home'); setMenuOpen(false) } },
               { label: 'About', action: () => { navigate('about'); setMenuOpen(false) } },
-              { label: 'Contact', action: () => setMenuOpen(false) },
             ].map((item) => (
               <button
                 key={item.label}
