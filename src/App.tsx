@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { ArrowLeftIcon, ArrowRightIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -174,7 +175,7 @@ function PasswordGate({
           >
             {study.title}
           </h1>
-          <p className="text-sm text-[#6B6B6B] leading-relaxed">{study.tagline}</p>
+          <p className="text-base text-[#4A4A4A] leading-relaxed">{study.tagline}</p>
         </div>
 
         <Divider />
@@ -231,7 +232,7 @@ function PasswordGate({
             onClick={onBack}
             className="mt-4 w-full py-2 text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#3B3B3B] transition-colors"
           >
-            ← Back to Work
+            <ArrowLeftIcon className="w-4 h-4 inline mr-1" /> Back to Work
           </button>
         </div>
       </div>
@@ -301,7 +302,7 @@ function CaseStudyContent({
           <h1 className="text-[36px] md:text-[52px] lg:text-[60px] font-light text-[#3B3B3B] leading-[1.08] mt-5 mb-6">
             {study.title}
           </h1>
-          <p className="text-base md:text-lg text-[#6B6B6B] leading-relaxed max-w-xl">
+          <p className="text-base md:text-lg text-[#4A4A4A] leading-relaxed max-w-xl">
             {study.tagline}
           </p>
         </div>
@@ -327,26 +328,26 @@ function CaseStudyContent({
         <div className="grid md:grid-cols-[1fr_220px] gap-12 py-14 border-b border-[#E6E6E6]">
           <div>
             <SectionLabel>Overview</SectionLabel>
-            <p className="text-base text-[#6B6B6B] leading-relaxed mt-5">{study.overview}</p>
+            <p className="text-base text-[#4A4A4A] leading-relaxed mt-5">{study.overview}</p>
           </div>
           <div className="space-y-7 md:border-l md:border-[#E6E6E6] md:pl-10">
             <div>
               <SectionLabel>Role</SectionLabel>
-              <p className="text-sm text-[#6B6B6B] leading-relaxed mt-2">{study.role}</p>
+              <p className="text-base text-[#4A4A4A] leading-relaxed mt-2">{study.role}</p>
             </div>
             <div>
               <SectionLabel>Category</SectionLabel>
-              <p className="text-sm text-[#6B6B6B] mt-2">{study.category}</p>
+              <p className="text-base text-[#4A4A4A] mt-2">{study.category}</p>
             </div>
             <div>
               <SectionLabel>Year</SectionLabel>
-              <p className="text-sm text-[#6B6B6B] mt-2">{study.year}</p>
+              <p className="text-base text-[#4A4A4A] mt-2">{study.year}</p>
             </div>
           </div>
         </div>
 
         <ContentSection label="Context">
-          <p className="text-base text-[#6B6B6B] leading-relaxed">{study.context}</p>
+          <p className="text-base text-[#4A4A4A] leading-relaxed">{study.context}</p>
         </ContentSection>
 
         {/* Mid image — flow / lottery journey */}
@@ -359,7 +360,7 @@ function CaseStudyContent({
         </div>
 
         <ContentSection label="Approach">
-          <p className="text-base text-[#6B6B6B] leading-relaxed">{study.approach}</p>
+          <p className="text-base text-[#4A4A4A] leading-relaxed">{study.approach}</p>
         </ContentSection>
 
         {/* Second mid image — wireframes + annotated screens */}
@@ -391,7 +392,7 @@ function CaseStudyContent({
                 >
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p className="text-base text-[#6B6B6B] leading-relaxed">{d}</p>
+                <p className="text-base text-[#4A4A4A] leading-relaxed">{d}</p>
               </li>
             ))}
           </ul>
@@ -399,13 +400,13 @@ function CaseStudyContent({
 
         {study.outcomes && (
           <ContentSection label="Outcomes">
-            <p className="text-base text-[#6B6B6B] leading-relaxed">{study.outcomes}</p>
+            <p className="text-base text-[#4A4A4A] leading-relaxed">{study.outcomes}</p>
           </ContentSection>
         )}
 
         {study.learnings && (
           <ContentSection label="Learnings">
-            <p className="text-base text-[#6B6B6B] leading-relaxed italic">{study.learnings}</p>
+            <p className="text-base text-[#4A4A4A] leading-relaxed italic">{study.learnings}</p>
           </ContentSection>
         )}
 
@@ -415,7 +416,7 @@ function CaseStudyContent({
             onClick={onBack}
             className="text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#D6006D] transition-colors"
           >
-            ← All Work
+            <ArrowLeftIcon className="w-4 h-4 inline mr-1" /> All Work
           </button>
           {nextStudy && (
             <button
@@ -424,7 +425,7 @@ function CaseStudyContent({
             >
               <SectionLabel>Next Case Study</SectionLabel>
               <p className="text-lg font-light text-[#3B3B3B] mt-1 group-hover:text-[#D6006D] transition-colors">
-                {nextStudy.title} →
+                {nextStudy.title} <ArrowRightIcon className="w-4 h-4 inline ml-1" />
               </p>
             </button>
           )}
@@ -511,10 +512,6 @@ function CaseStudyRow({
           <div className="w-full">
             <div className="flex items-center gap-3 mb-5">
               <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">
-                {study.number}
-              </span>
-              <span className="text-[12px] text-[#E6E6E6]">—</span>
-              <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">
                 {study.client}
               </span>
               <span className="text-[12px] text-[#E6E6E6]">·</span>
@@ -530,14 +527,14 @@ function CaseStudyRow({
               {study.title}
             </h2>
 
-            <p className="text-sm text-[#6B6B6B] leading-relaxed max-w-sm mb-7">
+            <p className="text-base text-[#4A4A4A] leading-relaxed max-w-sm mb-7">
               {study.tagline}
             </p>
 
             <span className="flex items-center gap-2 text-[12px] tracking-[0.18em] uppercase transition-colors duration-200"
               style={{ color: hovered ? study.swatchHex : '#D6006D' }}
             >
-              <span className="transition-transform duration-200" style={{ transform: hovered ? 'translateX(2px)' : 'translateX(0)' }}>→</span>
+              <ArrowRightIcon className="w-3.5 h-3.5 transition-transform duration-200" style={{ transform: hovered ? 'translateX(2px)' : 'translateX(0)' }} />
               View Case Study
             </span>
           </div>
@@ -569,7 +566,7 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
         <div className="absolute inset-0 bg-white/70" />
         <div className="max-w-5xl mx-auto px-6 md:px-12 relative">
           <div className="max-w-4xl">
-            <p className="text-[22px] md:text-[36px] lg:text-[44px] text-[#6B6B6B] font-light leading-tight">
+            <p className="text-[22px] md:text-[36px] lg:text-[44px] text-[#4A4A4A] font-light leading-tight">
               Olá! I'm Fernanda.
             </p>
             <h1 className="text-[32px] font-light leading-[1.1] mt-1" style={{ color: '#D6006D' }}>
@@ -606,44 +603,65 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
 // ─── About ────────────────────────────────────────────────────────────────────
 
 function AboutPage() {
+  const [expExpanded, setExpExpanded] = useState(false)
   return (
     <main className="min-h-[calc(100vh-56px)]">
       <div className="max-w-5xl mx-auto px-6 md:px-12 pt-20 pb-24 md:pt-28">
         {/* Header */}
-        <div className="mb-16 max-w-2xl">
-          <SectionLabel>About</SectionLabel>
-          <h1 className="text-[38px] md:text-[52px] font-light text-[#3B3B3B] leading-tight mt-5 mb-6">
-            Fernanda Nakaza
-          </h1>
-          <p className="text-lg text-[#6B6B6B] leading-relaxed">
-            Senior Product Designer with over twenty years of experience building digital products across enterprise tools, consumer applications, and complex systems.
-          </p>
+        <div className="mb-16 flex flex-col md:flex-row md:items-start gap-10 md:gap-14">
+          <img
+            src="/images/profile-img.png"
+            alt="Fernanda Nakaza"
+            className="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover object-top flex-shrink-0"
+          />
+          <div className="max-w-2xl">
+            <SectionLabel>About</SectionLabel>
+            <h1 className="text-[38px] md:text-[52px] font-light text-[#3B3B3B] leading-tight mt-5 mb-6">
+              Fernanda Nakaza
+            </h1>
+            <p className="text-lg text-[#4A4A4A] leading-relaxed">
+              Senior Product Designer with 20+ years of experience creating thoughtful, scalable digital products across enterprise SaaS, AI-enabled platforms, and consumer experiences.
+            </p>
+            <a
+              href="/FernandaNakaza-Resume2026.pdf"
+              download
+              className="inline-flex items-center gap-2 mt-4 group"
+            >
+              <span className="text-base text-[#D6006D] group-hover:opacity-70 transition-opacity">
+                Download Resume
+              </span>
+              <ArrowRightIcon className="w-4 h-4 text-[#D6006D] group-hover:translate-x-1 transition-transform" />
+            </a>
+          </div>
         </div>
 
         <Divider />
 
         {/* Two-column body */}
-        <div className="grid md:grid-cols-[1fr_240px] gap-12 md:gap-16 py-14 border-b border-[#E6E6E6]">
+        <div className="grid md:grid-cols-[1fr_240px] gap-12 md:gap-16 py-14">
           <div className="space-y-5">
-            <p className="text-base text-[#6B6B6B] leading-relaxed">
-              I've spent two decades working at the intersection of user needs, business goals, and technical constraints — helping organizations like Microsoft, Staples, and Glassdoor turn ambiguous problems into clear product decisions that hold up over time.
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              I'm Japanese Brazilian and based in British Columbia, Canada. I've worked remotely with global teams since 2020.
             </p>
-            <p className="text-base text-[#6B6B6B] leading-relaxed">
-              My approach is rooted in deep contextual research, rigorous systems thinking, and a commitment to craft at every level of the process — from rough sketches on a whiteboard to production-ready specifications and design systems that scale.
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              My work is based on research, systems thinking, and close collaboration to make complex products easier to understand and use. I enjoy working with product managers, engineers, and subject-matter experts to turn ideas into clear, practical experiences.
             </p>
-            <p className="text-base text-[#6B6B6B] leading-relaxed">
-              I work best in complex domains where the problem space itself needs to be defined before the solution space can be explored. That's where design thinking has the most leverage.
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              I've worked with both startups and large enterprises, including Unity, Microsoft, and Yahoo!, across enterprise software, e-commerce, media, and entertainment. Working across different industries and team sizes has helped me stay flexible and understand what each product and team needs.
+            </p>
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              I enjoy taking on complex problems, asking the right questions, and finding a clear path forward. My goal is to create products that feel simple and intuitive for the people who use them.
             </p>
           </div>
 
           <div className="space-y-9">
             <div>
               <SectionLabel>Practice Areas</SectionLabel>
-              <ul className="mt-3 space-y-1.5 text-sm text-[#6B6B6B] leading-relaxed">
+              <ul className="mt-3 space-y-1.5 text-sm text-[#4A4A4A] leading-relaxed">
                 {[
                   'Product Design',
-                  'Systems Design',
-                  'Design Research',
+                  'Design Systems',
+                  'User Research',
                   'Information Architecture',
                   'Design Leadership',
                   'Design Strategy',
@@ -655,39 +673,41 @@ function AboutPage() {
 
             <div>
               <SectionLabel>Experience</SectionLabel>
-              <ul className="mt-3 space-y-4 text-sm text-[#6B6B6B]">
+              <ul className="mt-3 space-y-2 text-sm text-[#4A4A4A]">
                 {[
-                  { company: 'Microsoft', years: '2018 — Present' },
-                  { company: 'Glassdoor', years: '2015 — 2018' },
-                  { company: 'Staples', years: '2012 — 2015' },
+                  { company: 'ValidMind', start: '2024', end: '2026' },
+                  { company: 'Unity / Capgemini', start: '2020', end: '2024' },
+                  { company: 'Galvanize / Diligent', start: '2019', end: '2020' },
+                  { company: 'PNI Media / Staples', start: '2016', end: '2019' },
+                  { company: 'Microsoft', start: '2016', end: '' },
+                  ...(expExpanded ? [
+                    { company: 'Glassdoor Brasil', start: '2014', end: '2015' },
+                    { company: 'Elo7 / Etsy', start: '2012', end: '2014' },
+                    { company: 'Yahoo!', start: '2007', end: '2012' },
+                    { company: 'RedeTV!', start: '2005', end: '2007' },
+                    { company: 'Lucida Studio', start: '2002', end: '2005' },
+                    { company: 'Isobar', start: '2001', end: '2002' },
+                    { company: 'Tesla', start: '2000', end: '2001' },
+                  ] : []),
                 ].map((item) => (
-                  <li key={item.company} className="leading-snug">
-                    {item.company}
-                    <br />
-                    <span className="text-[#767676]">{item.years}</span>
+                  <li key={item.company} className="grid grid-cols-[2.2rem_0.75rem_2.8rem_1fr] gap-x-1">
+                    <span className="text-[#767676]">{item.start}</span>
+                    <span className="text-[#767676] text-center">{item.end ? '-' : ''}</span>
+                    <span className="text-[#767676]">{item.end}</span>
+                    <span>{item.company}</span>
                   </li>
                 ))}
               </ul>
+              <button
+                onClick={() => setExpExpanded(!expExpanded)}
+                className="mt-3 text-xs text-[#D6006D] hover:opacity-70 transition-opacity"
+              >
+                {expExpanded ? <>Show less <ChevronUpIcon className="w-3.5 h-3.5 inline" /></> : <>Show more <ChevronDownIcon className="w-3.5 h-3.5 inline" /></>}
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Resume */}
-        <div className="pt-10">
-          <SectionLabel>Documents</SectionLabel>
-          <a
-            href="/FernandaNakaza-Resume2026.pdf"
-            download
-            className="inline-flex items-center gap-3 mt-4 group"
-          >
-            <span className="text-base font-medium text-[#3B3B3B] border-b border-[#3B3B3B] pb-0.5 group-hover:text-[#D6006D] group-hover:border-[#D6006D] transition-colors">
-              Download Resume
-            </span>
-            <span className="text-[#D6006D] group-hover:translate-x-1 transition-transform inline-block">
-              →
-            </span>
-          </a>
-        </div>
       </div>
     </main>
   )
@@ -710,12 +730,12 @@ function Nav({
   const navLinkClass = (active: boolean) =>
     [
       'text-[12px] tracking-[0.18em] uppercase transition-colors duration-200',
-      active ? 'text-white font-medium' : 'text-white/80 hover:text-white font-normal',
+      active ? 'text-white font-bold' : 'text-white/80 hover:text-white font-normal',
     ].join(' ')
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#6E6577]">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#6E6577]/80 backdrop-blur-md backdrop-saturate-150">
         <div className="max-w-5xl mx-auto px-6 md:px-12 h-14 flex items-center justify-between">
           {/* Logo / name */}
           <button
@@ -805,13 +825,14 @@ function Footer() {
         </p>
         <div className="flex items-center gap-6">
           {[
-            { label: 'LinkedIn', href: '#' },
-            { label: 'Email', href: 'mailto:hello@example.com' },
-            { label: 'Resume', href: '#' },
+            { label: 'LinkedIn', href: 'https://linkedin.com/in/fenakaza' },
+            { label: 'Email', href: 'mailto:fernanda.nakaza@gmail.com' },
+            { label: 'Resume', href: '/FernandaNakaza-Resume2026.pdf', download: true },
           ].map((link) => (
             <a
               key={link.label}
               href={link.href}
+              {...(link.download ? { download: true } : {})}
               className="text-[12px] tracking-[0.18em] uppercase text-white hover:text-white/70 transition-colors"
             >
               {link.label}
