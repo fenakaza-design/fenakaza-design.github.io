@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { ArrowLeftIcon, ArrowRightIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type Page = 'home' | 'about' | { type: 'case-study'; id: string }
+type Page = 'home' | 'about' | 'contact' | { type: 'case-study'; id: string }
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -17,6 +17,7 @@ const caseStudies = [
     year: '2026',
     tagline: 'Designing scalable workflows for AI-governance teams managing complex validation and reporting processes.',
     swatchHex: '#1A3A5C',
+    featured: true,
     password: 'portfolio2026!',
     overview: '',
     context: '',
@@ -33,6 +34,8 @@ const caseStudies = [
     year: '2024',
     tagline: 'A mobile raffle and browser-based WebGL experience that brought personalized game moments to live sports events.',
     swatchHex: '#3D1A6B',
+    featured: true,
+    password: 'portfolio2026!',
     overview:
       'Multilot 50/50 was created for online raffles during sports games. The experience combined a mobile lottery flow with a browser-based WebGL game. Players could use a selfie to generate a 3D animation that could be displayed on the venue jumbotron.',
     context:
@@ -87,7 +90,6 @@ const caseStudies = [
     year: '2017',
     tagline: 'Reimagining a daily news companion to surface relevant content through context, not just recency.',
     swatchHex: '#8B1A1A',
-    password: 'design',
     overview:
       'A new concept for the MSN News app — a daily news companion designed to give users easy, contextual access to MSN Weather, Sports, and Money content alongside the core news feed. The brief was to increase engagement beyond the first open.',
     context:
@@ -114,7 +116,6 @@ const caseStudies = [
     year: '2016',
     tagline: 'Building a trusted workplace review platform for the Brazilian market from the ground up.',
     swatchHex: '#1A4A2E',
-    password: 'design',
     overview:
       'Love Mondays is a Brazilian workplace review platform, a Glassdoor product built specifically for the local market. The brief was not to translate the Glassdoor product — it was to build something Brazilians would actually trust.',
     context:
@@ -185,7 +186,7 @@ function PasswordGate({
       <div className="w-full max-w-[360px]">
         {/* Project metadata */}
         <div className="mb-10">
-          <SectionLabel>{study.number} — {study.client}</SectionLabel>
+          <SectionLabel>{study.client}</SectionLabel>
           <h1
             className="text-[28px] md:text-[34px] font-light text-[#3B3B3B] mt-3 mb-3 leading-tight"
           >
@@ -312,9 +313,9 @@ function CaseStudyContent({
   return (
     <article>
       {/* ── Hero header ── */}
-      <div className="px-6 md:px-12 pt-14 pb-12 md:pt-20 md:pb-16 border-b border-[#E6E6E6]">
-        <div className="max-w-5xl mx-auto">
-          <SectionLabel>{study.number} — {study.client} · {study.category} · {study.year}</SectionLabel>
+      <div className="pt-14 pb-12 md:pt-20 md:pb-16 border-b border-[#E6E6E6]">
+        <div className="max-w-5xl mx-auto px-6 md:px-12">
+          <SectionLabel>{study.client} · {study.category} · {study.year}</SectionLabel>
           <h1 className="text-[36px] md:text-[52px] lg:text-[60px] font-light text-[#3B3B3B] leading-[1.08] mt-5 mb-6">
             {study.title}
           </h1>
@@ -506,69 +507,81 @@ function CaseStudyRow({
   index: number
   onClick: () => void
 }) {
-  const [hovered, setHovered] = useState(false)
   const flip = index % 2 !== 0
 
   return (
-    <div className="border-b border-[#E6E6E6]">
-      <button
-        onClick={onClick}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onFocus={() => setHovered(true)}
-        onBlur={() => setHovered(false)}
-        className="w-full text-left"
-      >
+    <div className="border-b border-[#E6E6E6]" style={{ '--swatch': study.swatchHex } as React.CSSProperties}>
+      {study.featured ? (
+        /* Featured layout: full-width image on top, text below */
+        <div className="max-w-5xl mx-auto px-6 md:px-12">
+          <div
+            onClick={onClick}
+            className="w-full aspect-[16/9] cursor-pointer hover:opacity-90 transition-opacity duration-200 mt-10 md:mt-14"
+            style={{
+              backgroundColor: `${study.swatchHex}12`,
+              borderTop: `3px solid ${study.swatchHex}30`,
+            }}
+          />
+          <div className="pt-6 pb-10 md:pb-14">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">{study.client}</span>
+              <span className="text-[12px] text-[#E6E6E6]">·</span>
+              <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">{study.year}</span>
+            </div>
+            <h2 className="text-[26px] md:text-[32px] font-light leading-tight mb-3 text-[#3B3B3B]">
+              {study.title}
+            </h2>
+            <p className="text-base text-[#4A4A4A] leading-relaxed max-w-2xl mb-7">{study.tagline}</p>
+            <button
+              onClick={onClick}
+              className="group/link flex items-center gap-2 text-[12px] tracking-[0.18em] uppercase text-[#D6006D] hover:text-[#A3004F] transition-colors duration-200"
+            >
+              <ArrowRightIcon className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform duration-200" />
+              View Case Study
+            </button>
+            {study.password && (
+              <p className="text-[11px] text-[#767676] mt-2 tracking-wide">Password required</p>
+            )}
+          </div>
+        </div>
+      ) : (
+        /* Standard layout: text + image side by side */
         <div
           className={`max-w-5xl mx-auto px-6 md:px-12 py-10 md:py-14 flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-16 items-center ${
             flip ? 'md:[&>*:first-child]:order-2' : ''
           }`}
         >
-          {/* Text block */}
           <div className="w-full">
             <div className="flex items-center gap-3 mb-5">
-              <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">
-                {study.client}
-              </span>
+              <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">{study.client}</span>
               <span className="text-[12px] text-[#E6E6E6]">·</span>
-              <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">
-                {study.year}
-              </span>
+              <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">{study.year}</span>
             </div>
-
-            <h2
-              className="text-[26px] md:text-[32px] font-light leading-tight mb-3 transition-colors duration-200"
-              style={{ color: hovered ? study.swatchHex : '#3B3B3B' }}
-            >
+            <h2 className="text-[26px] md:text-[32px] font-light leading-tight mb-3 text-[#3B3B3B]">
               {study.title}
             </h2>
-
-            <p className="text-base text-[#4A4A4A] leading-relaxed max-w-sm mb-7">
-              {study.tagline}
-            </p>
-
-            <span className="flex items-center gap-2 text-[12px] tracking-[0.18em] uppercase transition-colors duration-200"
-              style={{ color: hovered ? study.swatchHex : '#D6006D' }}
+            <p className="text-base text-[#4A4A4A] leading-relaxed max-w-sm mb-7">{study.tagline}</p>
+            <button
+              onClick={onClick}
+              className="group/link flex items-center gap-2 text-[12px] tracking-[0.18em] uppercase text-[#D6006D] hover:text-[#A3004F] transition-colors duration-200"
             >
-              <ArrowRightIcon className="w-3.5 h-3.5 transition-transform duration-200" style={{ transform: hovered ? 'translateX(2px)' : 'translateX(0)' }} />
+              <ArrowRightIcon className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform duration-200" />
               View Case Study
-            </span>
+            </button>
             {study.password && (
               <p className="text-[11px] text-[#767676] mt-2 tracking-wide">Password required</p>
             )}
           </div>
-
-          {/* Image */}
           <div
-            className="w-full aspect-[4/3] transition-opacity duration-500"
+            onClick={onClick}
+            className="w-full aspect-[4/3] cursor-pointer hover:opacity-90 transition-opacity duration-200"
             style={{
               backgroundColor: `${study.swatchHex}12`,
-              borderTop: `3px solid ${study.swatchHex}${hovered ? '60' : '25'}`,
-              opacity: hovered ? 1 : 0.8,
+              borderTop: `3px solid ${study.swatchHex}30`,
             }}
           />
         </div>
-      </button>
+      )}
     </div>
   )
 }
@@ -577,18 +590,18 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
   return (
     <main>
       {/* ── Intro ── */}
-      <section className="pt-20 pb-20 md:pt-28 md:pb-[136px] relative overflow-hidden">
+      <section className="pt-10 pb-[120px] md:pt-[72px] md:pb-[176px] relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: 'url(/images/hero-bg.jpg)' }}
         />
-        <div className="absolute inset-0 bg-white/70" />
+        <div className="absolute inset-0 bg-white/45" />
         <div className="max-w-5xl mx-auto px-6 md:px-12 relative">
           <div className="max-w-4xl">
-            <p className="text-[22px] md:text-[36px] lg:text-[44px] text-[#4A4A4A] font-light leading-tight">
+            <p className="text-[18px] md:text-[32px] lg:text-[40px] font-light leading-tight" style={{ color: '#D6006D' }}>
               Olá! I'm Fernanda.
             </p>
-            <h1 className="text-[32px] font-light leading-[1.1] mt-1" style={{ color: '#D6006D' }}>
+            <h1 className="text-[28px] font-light leading-[1.1] mt-1 text-[#4A4A4A]">
               I help teams simplify complex workflows<br />through thoughtful product design.
             </h1>
           </div>
@@ -599,20 +612,41 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
 
       {/* ── Work index ── */}
       <section>
-        <div className="max-w-5xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
-          <SectionLabel>Selected Work</SectionLabel>
-          <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">
-            {caseStudies.length} Case Studies
-          </span>
+        <div className="max-w-5xl mx-auto px-6 md:px-12 pt-5 pb-2">
+          <h2 className="text-[16px] tracking-[0.18em] uppercase text-[#767676] font-medium">
+            Recent Case Studies
+          </h2>
+        </div>
+        <div className="max-w-5xl mx-auto px-6 md:px-12 pb-5">
+          <p className="text-sm text-[#767676] leading-relaxed">
+            Selected projects require a password because they contain confidential product work and internal workflows.{' '}
+            <button
+              onClick={() => navigate('contact')}
+              className="text-[#D6006D] hover:text-[#A3004F] transition-colors"
+            >
+              Request access
+            </button>
+          </p>
         </div>
         <Divider />
         {caseStudies.map((study, i) => (
-          <CaseStudyRow
-            key={study.id}
-            study={study}
-            index={i}
-            onClick={() => navigate({ type: 'case-study', id: study.id })}
-          />
+          <React.Fragment key={study.id}>
+            {!study.password && (i === 0 || caseStudies[i - 1].password) && (
+              <>
+                <div className="max-w-5xl mx-auto px-6 md:px-12 py-5">
+                  <h2 className="text-[16px] tracking-[0.18em] uppercase text-[#767676] font-medium">
+                    Previous Case Studies
+                  </h2>
+                </div>
+                <Divider />
+              </>
+            )}
+            <CaseStudyRow
+              study={study}
+              index={i}
+              onClick={() => navigate({ type: 'case-study', id: study.id })}
+            />
+          </React.Fragment>
         ))}
       </section>
     </main>
@@ -745,6 +779,7 @@ function Nav({
 
   const isHome = page === 'home'
   const isAbout = page === 'about'
+  const isContact = page === 'contact'
 
   const navLinkClass = (active: boolean) =>
     [
@@ -772,7 +807,9 @@ function Nav({
             <button onClick={() => navigate('about')} className={navLinkClass(isAbout)}>
               About
             </button>
-
+            <button onClick={() => navigate('contact')} className={navLinkClass(isContact)}>
+              Contact
+            </button>
           </div>
 
           {/* Mobile hamburger */}
@@ -809,6 +846,7 @@ function Nav({
             {[
               { label: 'Work', action: () => { navigate('home'); setMenuOpen(false) } },
               { label: 'About', action: () => { navigate('about'); setMenuOpen(false) } },
+              { label: 'Contact', action: () => { navigate('contact'); setMenuOpen(false) } },
             ].map((item) => (
               <button
                 key={item.label}
@@ -830,6 +868,48 @@ function Nav({
         />
       )}
     </>
+  )
+}
+
+// ─── Contact page ─────────────────────────────────────────────────────────────
+
+function ContactPage() {
+  return (
+    <main className="min-h-[calc(100vh-56px)]">
+      <div className="max-w-5xl mx-auto px-6 md:px-12 pt-20 pb-24 md:pt-28">
+        <SectionLabel>Contact</SectionLabel>
+        <h1 className="text-[38px] md:text-[52px] font-light text-[#3B3B3B] leading-tight mt-5 mb-6">
+          Let's talk.
+        </h1>
+        <p className="text-lg text-[#4A4A4A] leading-relaxed max-w-xl mb-10">
+          Whether you're looking to collaborate, need access to a protected case study, or just want to connect: I'd love to hear from you.
+        </p>
+        <div className="space-y-4">
+          <a
+            href="mailto:fernanda.nakaza@gmail.com"
+            className="flex items-center gap-3 group w-fit"
+          >
+            <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">Email</span>
+            <span className="text-base text-[#3B3B3B] group-hover:text-[#D6006D] transition-colors">
+              fernanda.nakaza@gmail.com
+            </span>
+            <ArrowRightIcon className="w-4 h-4 text-[#D6006D] group-hover:translate-x-0.5 transition-transform" />
+          </a>
+          <a
+            href="https://linkedin.com/in/fenakaza"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 group w-fit"
+          >
+            <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">LinkedIn</span>
+            <span className="text-base text-[#3B3B3B] group-hover:text-[#D6006D] transition-colors">
+              linkedin.com/in/fenakaza
+            </span>
+            <ArrowRightIcon className="w-4 h-4 text-[#D6006D] group-hover:translate-x-0.5 transition-transform" />
+          </a>
+        </div>
+      </div>
+    </main>
   )
 }
 
@@ -868,6 +948,7 @@ function Footer() {
 function pageToPath(page: Page): string {
   if (page === 'home') return '/'
   if (page === 'about') return '/about'
+  if (page === 'contact') return '/contact'
   return `/work/${page.id}`
 }
 
@@ -879,6 +960,7 @@ function pathToPage(path: string): Page {
     return pathToPage(redirected)
   }
   if (path === '/about') return 'about'
+  if (path === '/contact') return 'contact'
   const match = path.match(/^\/work\/(.+)$/)
   if (match) return { type: 'case-study', id: match[1] }
   return 'home'
@@ -914,6 +996,7 @@ export default function App() {
       <div className="pt-14">
         {page === 'home' && <HomePage navigate={navigate} />}
         {page === 'about' && <AboutPage />}
+        {page === 'contact' && <ContactPage />}
         {typeof page === 'object' && page.type === 'case-study' && (
           <CaseStudyPage
             id={page.id}
