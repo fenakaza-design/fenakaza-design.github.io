@@ -15,7 +15,7 @@ const caseStudies = [
     client: 'ValidMind',
     category: 'Enterprise SaaS · AI Governance',
     year: '2026',
-    tagline: 'Designing end-to-end features, a Figma design system, and AI-augmented workflows for an enterprise AI governance platform.',
+    tagline: 'Designing scalable workflows for AI-governance teams managing complex validation and reporting processes.',
     swatchHex: '#1A3A5C',
     password: 'portfolio2026!',
     overview: '',
