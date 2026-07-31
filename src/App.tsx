@@ -595,7 +595,7 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: 'url(/images/hero-bg.jpg)' }}
         />
-        <div className="absolute inset-0 bg-white/45" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom right, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.45) 40%, rgba(255,255,255,0.1) 70%, transparent 100%)' }} />
         <div className="max-w-5xl mx-auto px-6 md:px-12 relative">
           <div className="max-w-4xl">
             <p className="text-[26px] md:text-[32px] lg:text-[40px] font-light leading-tight" style={{ color: '#D6006D' }}>
