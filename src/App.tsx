@@ -598,11 +598,11 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
         <div className="absolute inset-0 bg-white/45" />
         <div className="max-w-5xl mx-auto px-6 md:px-12 relative">
           <div className="max-w-4xl">
-            <p className="text-[18px] md:text-[32px] lg:text-[40px] font-light leading-tight" style={{ color: '#D6006D' }}>
+            <p className="text-[26px] md:text-[32px] lg:text-[40px] font-light leading-tight" style={{ color: '#D6006D' }}>
               Olá! I'm Fernanda.
             </p>
-            <h1 className="text-[28px] font-light leading-[1.1] mt-1 text-[#4A4A4A]">
-              I help teams simplify complex workflows<br />through thoughtful product design.
+            <h1 className="text-[18px] md:text-[28px] font-light leading-[1.3] mt-1 text-[#4A4A4A]">
+              I help teams simplify complex workflows<br className="hidden md:inline" /> through thoughtful product design.
             </h1>
           </div>
         </div>
@@ -839,19 +839,21 @@ function Nav({
         {/* Mobile drawer */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ${
-            menuOpen ? 'max-h-48' : 'max-h-0'
+            menuOpen ? 'max-h-64' : 'max-h-0'
           }`}
         >
           <div className="border-t border-white/20 bg-[#6E6577] px-6 py-6 space-y-5">
             {[
-              { label: 'Work', action: () => { navigate('home'); setMenuOpen(false) } },
-              { label: 'About', action: () => { navigate('about'); setMenuOpen(false) } },
-              { label: 'Contact', action: () => { navigate('contact'); setMenuOpen(false) } },
+              { label: 'Work', action: () => { navigate('home'); setMenuOpen(false) }, active: isHome },
+              { label: 'About', action: () => { navigate('about'); setMenuOpen(false) }, active: isAbout },
+              { label: 'Contact', action: () => { navigate('contact'); setMenuOpen(false) }, active: isContact },
             ].map((item) => (
               <button
                 key={item.label}
                 onClick={item.action}
-                className="block w-full text-left text-[12px] tracking-[0.18em] uppercase text-white/80 hover:text-white py-1.5 min-h-[44px] flex items-center transition-colors"
+                className={`block w-full text-left text-[12px] tracking-[0.18em] uppercase py-1.5 min-h-[44px] flex items-center transition-colors ${
+                  item.active ? 'text-white font-medium' : 'text-white/60 hover:text-white/80'
+                }`}
               >
                 {item.label}
               </button>
