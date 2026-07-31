@@ -9,6 +9,22 @@ type Page = 'home' | 'about' | { type: 'case-study'; id: string }
 
 const caseStudies = [
   {
+    id: 'validmind',
+    number: '01',
+    title: 'AI Governance Platform',
+    client: 'ValidMind',
+    category: 'Enterprise SaaS · AI Governance',
+    year: '2026',
+    tagline: 'Designing end-to-end features, a Figma design system, and AI-augmented workflows for an enterprise AI governance platform.',
+    swatchHex: '#1A3A5C',
+    password: 'portfolio2026!',
+    overview: '',
+    context: '',
+    role: '',
+    approach: '',
+    keyDecisions: [],
+  },
+  {
     id: 'multilot',
     number: '01',
     title: 'Multilot 50/50 App',
@@ -537,6 +553,9 @@ function CaseStudyRow({
               <ArrowRightIcon className="w-3.5 h-3.5 transition-transform duration-200" style={{ transform: hovered ? 'translateX(2px)' : 'translateX(0)' }} />
               View Case Study
             </span>
+            {study.password && (
+              <p className="text-[11px] text-[#767676] mt-2 tracking-wide">Password required</p>
+            )}
           </div>
 
           {/* Image */}
