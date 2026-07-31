@@ -794,7 +794,7 @@ function Nav({
           {/* Logo / name */}
           <button
             onClick={() => { navigate('home'); setMenuOpen(false) }}
-            className="text-[12px] tracking-[0.22em] uppercase font-medium text-white hover:text-white/60 transition-colors whitespace-nowrap"
+            className="text-[12px] tracking-[0.22em] uppercase font-medium text-white hover:text-white/60 transition-colors truncate min-w-0"
           >
             FE NAKAZA <span className="text-white/30 font-light">|</span> SENIOR PRODUCT DESIGNER
           </button>
