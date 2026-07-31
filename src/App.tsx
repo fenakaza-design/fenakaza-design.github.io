@@ -619,7 +619,7 @@ function HomePage({ navigate }: { navigate: (p: Page) => void }) {
         </div>
         <div className="max-w-5xl mx-auto px-6 md:px-12 pb-5">
           <p className="text-sm text-[#767676] leading-relaxed">
-            Selected projects require a password because they contain confidential product work and internal workflows.{' '}
+            Selected projects require a password due to confidential product work and internal workflows.{' '}
             <button
               onClick={() => navigate('contact')}
               className="text-[#D6006D] hover:text-[#A3004F] transition-colors"
@@ -879,10 +879,10 @@ function ContactPage() {
       <div className="max-w-5xl mx-auto px-6 md:px-12 pt-20 pb-24 md:pt-28">
         <SectionLabel>Contact</SectionLabel>
         <h1 className="text-[38px] md:text-[52px] font-light text-[#3B3B3B] leading-tight mt-5 mb-6">
-          Let's talk.
+          Let's talk. 👋
         </h1>
         <p className="text-lg text-[#4A4A4A] leading-relaxed max-w-xl mb-10">
-          Whether you're looking to collaborate, need access to a protected case study, or just want to connect: I'd love to hear from you.
+          Whether you're looking to collaborate, need access to a protected case study, or just want to connect, I'd love to hear from you.
         </p>
         <div className="space-y-4">
           <a
