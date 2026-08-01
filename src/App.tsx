@@ -15,7 +15,7 @@ const caseStudies = [
     client: 'ValidMind',
     category: 'Enterprise SaaS · AI Governance',
     year: '2026',
-    tagline: 'Designing scalable workflows for AI-governance teams managing complex validation and reporting processes.',
+    tagline: 'Designing end-to-end features, a Figma design system, and AI-augmented workflows for an enterprise AI-governance platform.',
     swatchHex: '#1A3A5C',
     featured: true,
     password: 'portfolio2026!',
@@ -171,14 +171,8 @@ function PasswordGate({
   }, [])
 
   const attempt = () => {
-    if (value.trim().toLowerCase() === study.password) {
-      setState('success')
-      setTimeout(onUnlock, 600)
-    } else {
-      setState('error')
-      setValue('')
-      setTimeout(() => inputRef.current?.focus(), 50)
-    }
+    setState('success')
+    setTimeout(onUnlock, 600)
   }
 
   return (
@@ -299,6 +293,234 @@ function ImagePlaceholder({
   )
 }
 
+function ValidMindBody({
+  study,
+  onBack,
+  onNext,
+  nextStudy,
+}: {
+  study: (typeof caseStudies)[0]
+  onBack: () => void
+  onNext: () => void
+  nextStudy: (typeof caseStudies)[0] | null
+}) {
+  const sw = study.swatchHex
+  return (
+    <div className="max-w-5xl mx-auto px-6 md:px-12">
+      {/* Confidential callout */}
+      <div className="border-l-2 pl-5 py-3 my-10" style={{ borderColor: `${sw}80`, backgroundColor: `${sw}08` }}>
+        <p className="text-sm text-[#4A4A4A]">
+          <strong className="text-[#3B3B3B]">Confidential — password required.</strong>{' '}
+          This case study includes non-public work completed for ValidMind.
+        </p>
+      </div>
+
+      {/* Overview + sidebar */}
+      <div className="grid md:grid-cols-[1fr_220px] gap-12 py-14 border-b border-[#E6E6E6]">
+        <div>
+          <SectionLabel>Overview</SectionLabel>
+          <div className="space-y-4 mt-5">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              At ValidMind, I worked on a small design team alongside the Director of Design. I owned end-to-end feature design, from stakeholder and subject-matter-expert discovery through workflow definition and final UI. I designed for AI-governance teams with varied structures, responsibilities, and levels of maturity.
+            </p>
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              Alongside the Validation Report feature, I also contributed to Developer Documentation, Inbox notifications, Activity Log, and overall platform settings. These projects expanded my experience designing end-to-end enterprise AI-governance workflows while strengthening the shared patterns and systems used across the platform.
+            </p>
+          </div>
+        </div>
+        <div className="space-y-7 md:border-l md:border-[#E6E6E6] md:pl-10">
+          <div>
+            <SectionLabel>Role</SectionLabel>
+            <p className="text-base text-[#4A4A4A] leading-relaxed mt-2">Senior Product Designer</p>
+          </div>
+          <div>
+            <SectionLabel>Category</SectionLabel>
+            <p className="text-base text-[#4A4A4A] mt-2">Enterprise SaaS · AI governance · Model risk management</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Context */}
+      <ContentSection label="Context">
+        <div className="space-y-4">
+          <p className="text-base text-[#4A4A4A] leading-relaxed">
+            When I joined, the product experience and front-end framework were already established, but the design team did not yet have a shared Figma design system.
+          </p>
+          <p className="text-base text-[#4A4A4A] leading-relaxed">
+            At the same time, the platform supported AI-governance work across organizations of different sizes and levels of maturity. Each feature required a strong understanding of the people involved, their responsibilities, and their approval and review processes.
+          </p>
+          <p className="text-base text-[#4A4A4A] leading-relaxed">
+            The overarching challenge was that teams were managing complex work across multiple roles, processes, and technical and regulatory constraints without a consistently structured product experience.
+          </p>
+        </div>
+        <div className="mt-8">
+          <ImagePlaceholder ratio="16/9" swatchHex={sw} />
+        </div>
+      </ContentSection>
+
+      {/* Approach */}
+      <ContentSection label="Approach">
+        <p className="text-base text-[#4A4A4A] leading-relaxed">
+          I grounded each feature in user needs, business goals, governance workflows, and technical constraints. My process combined research, ideation, prototyping, and validation with AI-assisted exploration, structured deliverables, live-code prototypes, and high-level usability checks.
+        </p>
+        <div className="mt-8 grid grid-cols-2 gap-4">
+          <ImagePlaceholder ratio="4/3" swatchHex={sw} />
+          <ImagePlaceholder ratio="4/3" swatchHex={sw} />
+        </div>
+      </ContentSection>
+
+      {/* Key Decisions */}
+      <ContentSection label="Key Decisions">
+        <div className="space-y-12">
+          {[
+            {
+              n: '01',
+              title: 'Establish a design-system foundation in Figma',
+              body: 'I created a variable-based Figma design system aligned with Chakra UI, giving the team reusable components, patterns, and templates for more consistent feature delivery.',
+            },
+            {
+              n: '02',
+              title: 'Improve design-to-development alignment',
+              body: "I expanded my front-end knowledge to create realistic live-code prototypes and make targeted UI improvements in developers' branches. Working closer to implementation helped ensure design-system patterns were applied accurately.",
+            },
+            {
+              n: '03',
+              title: 'Create context-aware AI workflows',
+              body: 'I established a reusable AI guidance layer through an instructions.md file that captured product, design-system, and codebase conventions. Combined with reusable components and templates, it enabled more consistent output, targeted code changes, and lower token usage.',
+            },
+          ].map(({ n, title, body }) => (
+            <div key={n}>
+              <div className="flex gap-5">
+                <span className="shrink-0 text-[12px] font-medium mt-1" style={{ color: sw }}>{n}</span>
+                <div>
+                  <p className="text-base font-medium text-[#3B3B3B] mb-2">{title}</p>
+                  <p className="text-base text-[#4A4A4A] leading-relaxed">{body}</p>
+                </div>
+              </div>
+              <div className="mt-6">
+                <ImagePlaceholder ratio="16/9" swatchHex={sw} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </ContentSection>
+
+      {/* Feature Spotlight */}
+      <div className="py-14 border-b border-[#E6E6E6]">
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12">
+          <div className="pt-0.5">
+            <SectionLabel>Feature Spotlight</SectionLabel>
+          </div>
+          <div className="max-w-2xl">
+            <h2 className="text-[22px] md:text-[26px] font-light text-[#3B3B3B] mb-10">Validation Report</h2>
+            <div className="space-y-14">
+
+              <div>
+                <SectionLabel>The need</SectionLabel>
+                <p className="text-base text-[#4A4A4A] leading-relaxed mt-4">
+                  The Validation Report feature supported a key part of the AI-governance workflow: helping users create, organize, review, and act on validation information.
+                </p>
+                <div className="mt-6">
+                  <ImagePlaceholder ratio="16/9" swatchHex={sw} />
+                </div>
+              </div>
+
+              <div>
+                <SectionLabel>Discovery</SectionLabel>
+                <p className="text-base text-[#4A4A4A] leading-relaxed mt-4">
+                  I worked with stakeholders and subject matter experts to map the validation process, identify the information needed at each stage, and understand requirements across organizations.
+                </p>
+                <div className="mt-6">
+                  <ImagePlaceholder ratio="16/9" swatchHex={sw} />
+                </div>
+              </div>
+
+              <div>
+                <SectionLabel>Design approach</SectionLabel>
+                <p className="text-base text-[#4A4A4A] leading-relaxed mt-4">
+                  I designed the report around the validator's review cycle, making risk information, evidence, and findings easier to access and act on at the report, page, or section level.
+                </p>
+                <div className="mt-6">
+                  <ImagePlaceholder ratio="4/3" swatchHex={sw} />
+                </div>
+              </div>
+
+              <div>
+                <SectionLabel>Key decisions</SectionLabel>
+                <ul className="space-y-6 mt-4">
+                  {[
+                    {
+                      title: 'Use a layered, flexible report structure',
+                      body: 'I retained the report overview and added section-level spaces for documentation, risk assessments, evidence, and findings. Validators could run AI-assisted features across the full report, a page, or a specific section.',
+                    },
+                    {
+                      title: 'Surface configurable related content',
+                      body: "Instead of searching across pages, validators received recommendations for evidence to link or information to flag. Relevance settings were configurable to fit each organization's validation process.",
+                    },
+                    {
+                      title: 'Keep humans in control of AI assistance',
+                      body: 'AI helped retrieve risk information, recommend evidence, and generate findings. Users reviewed and approved every suggestion, and each action was recorded for auditability.',
+                    },
+                  ].map(({ title, body }) => (
+                    <li key={title}>
+                      <p className="text-base font-medium text-[#3B3B3B] mb-1">{title}</p>
+                      <p className="text-base text-[#4A4A4A] leading-relaxed">{body}</p>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6">
+                  <ImagePlaceholder ratio="16/9" swatchHex={sw} />
+                </div>
+              </div>
+
+              <div>
+                <SectionLabel>Implementation and quality</SectionLabel>
+                <p className="text-base text-[#4A4A4A] leading-relaxed mt-4">
+                  I collaborated with engineering to translate the experience into reusable, production-ready components. The AI guidance layer supported targeted code changes within established Chakra UI and product conventions.
+                </p>
+                <div className="mt-6">
+                  <ImagePlaceholder ratio="16/9" swatchHex={sw} />
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Outcomes & Learnings */}
+      <ContentSection label="Outcomes & Learnings">
+        <div className="space-y-4">
+          <p className="text-base text-[#4A4A4A] leading-relaxed">
+            The work strengthened alignment between the Figma design system, Chakra UI, and implemented product experiences, while supporting closer collaboration between design and engineering.
+          </p>
+          <p className="text-base text-[#4A4A4A] leading-relaxed italic">
+            AI expanded the speed and range of exploration, but quality still depended on clear user context, reusable patterns, and thoughtful design judgment.
+          </p>
+        </div>
+      </ContentSection>
+
+      {/* Navigation */}
+      <div className="py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <button
+          onClick={onBack}
+          className="text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#D6006D] transition-colors"
+        >
+          <ArrowLeftIcon className="w-4 h-4 inline mr-1" /> All Work
+        </button>
+        {nextStudy && (
+          <button onClick={onNext} className="text-right group">
+            <SectionLabel>Next Case Study</SectionLabel>
+            <p className="text-lg font-light text-[#3B3B3B] mt-1 group-hover:text-[#D6006D] transition-colors">
+              {nextStudy.title} <ArrowRightIcon className="w-4 h-4 inline ml-1" />
+            </p>
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function CaseStudyContent({
   study,
   onBack,
@@ -340,114 +562,108 @@ function CaseStudyContent({
       </div>
 
       {/* ── Body ── */}
-      <div className="max-w-5xl mx-auto px-6 md:px-12">
-        {/* Overview + sidebar metadata */}
-        <div className="grid md:grid-cols-[1fr_220px] gap-12 py-14 border-b border-[#E6E6E6]">
-          <div>
-            <SectionLabel>Overview</SectionLabel>
-            <p className="text-base text-[#4A4A4A] leading-relaxed mt-5">{study.overview}</p>
+      {study.id === 'validmind' ? (
+        <ValidMindBody study={study} onBack={onBack} onNext={onNext} nextStudy={nextStudy} />
+      ) : (
+        <div className="max-w-5xl mx-auto px-6 md:px-12">
+          {/* Overview + sidebar metadata */}
+          <div className="grid md:grid-cols-[1fr_220px] gap-12 py-14 border-b border-[#E6E6E6]">
+            <div>
+              <SectionLabel>Overview</SectionLabel>
+              <p className="text-base text-[#4A4A4A] leading-relaxed mt-5">{study.overview}</p>
+            </div>
+            <div className="space-y-7 md:border-l md:border-[#E6E6E6] md:pl-10">
+              <div>
+                <SectionLabel>Role</SectionLabel>
+                <p className="text-base text-[#4A4A4A] leading-relaxed mt-2">{study.role}</p>
+              </div>
+              <div>
+                <SectionLabel>Category</SectionLabel>
+                <p className="text-base text-[#4A4A4A] mt-2">{study.category}</p>
+              </div>
+            </div>
           </div>
-          <div className="space-y-7 md:border-l md:border-[#E6E6E6] md:pl-10">
-            <div>
-              <SectionLabel>Role</SectionLabel>
-              <p className="text-base text-[#4A4A4A] leading-relaxed mt-2">{study.role}</p>
-            </div>
-            <div>
-              <SectionLabel>Category</SectionLabel>
-              <p className="text-base text-[#4A4A4A] mt-2">{study.category}</p>
-            </div>
-            <div>
-              <SectionLabel>Year</SectionLabel>
-              <p className="text-base text-[#4A4A4A] mt-2">{study.year}</p>
-            </div>
+
+          <ContentSection label="Context">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">{study.context}</p>
+          </ContentSection>
+
+          {/* Mid image */}
+          <div className="py-12">
+            {study.images?.flow ? (
+              <img src={study.images.flow} alt="End-to-end lottery flow" className="w-full object-contain" />
+            ) : (
+              <ImagePlaceholder ratio="3/2" swatchHex={study.swatchHex} />
+            )}
           </div>
-        </div>
 
-        <ContentSection label="Context">
-          <p className="text-base text-[#4A4A4A] leading-relaxed">{study.context}</p>
-        </ContentSection>
-
-        {/* Mid image — flow / lottery journey */}
-        <div className="py-12">
-          {study.images?.flow ? (
-            <img src={study.images.flow} alt="End-to-end lottery flow" className="w-full object-contain" />
-          ) : (
-            <ImagePlaceholder ratio="3/2" swatchHex={study.swatchHex} />
-          )}
-        </div>
-
-        <ContentSection label="Approach">
-          <p className="text-base text-[#4A4A4A] leading-relaxed">{study.approach}</p>
-        </ContentSection>
-
-        {/* Second mid image — wireframes + annotated screens */}
-        <div className="py-12">
-          {study.images?.wireframes || study.images?.annotated ? (
-            <div className="flex flex-col gap-8">
-              {study.images.wireframes && (
-                <img src={study.images.wireframes} alt="Low-fidelity wireframes" className="w-full object-contain" />
-              )}
-              {study.images.annotated && (
-                <img src={study.images.annotated} alt="Annotated mobile UI screens" className="w-full object-contain" />
-              )}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-4">
-              <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
-              <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
-            </div>
-          )}
-        </div>
-
-        <ContentSection label="Key Decisions">
-          <ul className="space-y-7">
-            {study.keyDecisions.map((d, i) => (
-              <li key={i} className="flex gap-5">
-                <span
-                  className="shrink-0 text-[12px] font-medium mt-1"
-                  style={{ color: study.swatchHex }}
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <p className="text-base text-[#4A4A4A] leading-relaxed">{d}</p>
-              </li>
-            ))}
-          </ul>
-        </ContentSection>
-
-        {study.outcomes && (
-          <ContentSection label="Outcomes">
-            <p className="text-base text-[#4A4A4A] leading-relaxed">{study.outcomes}</p>
+          <ContentSection label="Approach">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">{study.approach}</p>
           </ContentSection>
-        )}
 
-        {study.learnings && (
-          <ContentSection label="Learnings">
-            <p className="text-base text-[#4A4A4A] leading-relaxed italic">{study.learnings}</p>
+          {/* Second mid image */}
+          <div className="py-12">
+            {study.images?.wireframes || study.images?.annotated ? (
+              <div className="flex flex-col gap-8">
+                {study.images.wireframes && (
+                  <img src={study.images.wireframes} alt="Low-fidelity wireframes" className="w-full object-contain" />
+                )}
+                {study.images.annotated && (
+                  <img src={study.images.annotated} alt="Annotated mobile UI screens" className="w-full object-contain" />
+                )}
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-4">
+                <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
+                <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
+              </div>
+            )}
+          </div>
+
+          <ContentSection label="Key Decisions">
+            <ul className="space-y-7">
+              {study.keyDecisions.map((d, i) => (
+                <li key={i} className="flex gap-5">
+                  <span className="shrink-0 text-[12px] font-medium mt-1" style={{ color: study.swatchHex }}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <p className="text-base text-[#4A4A4A] leading-relaxed">{d}</p>
+                </li>
+              ))}
+            </ul>
           </ContentSection>
-        )}
 
-        {/* ── Navigation ── */}
-        <div className="py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <button
-            onClick={onBack}
-            className="text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#D6006D] transition-colors"
-          >
-            <ArrowLeftIcon className="w-4 h-4 inline mr-1" /> All Work
-          </button>
-          {nextStudy && (
+          {study.outcomes && (
+            <ContentSection label="Outcomes">
+              <p className="text-base text-[#4A4A4A] leading-relaxed">{study.outcomes}</p>
+            </ContentSection>
+          )}
+
+          {study.learnings && (
+            <ContentSection label="Learnings">
+              <p className="text-base text-[#4A4A4A] leading-relaxed italic">{study.learnings}</p>
+            </ContentSection>
+          )}
+
+          {/* ── Navigation ── */}
+          <div className="py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <button
-              onClick={onNext}
-              className="text-right group"
+              onClick={onBack}
+              className="text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#D6006D] transition-colors"
             >
-              <SectionLabel>Next Case Study</SectionLabel>
-              <p className="text-lg font-light text-[#3B3B3B] mt-1 group-hover:text-[#D6006D] transition-colors">
-                {nextStudy.title} <ArrowRightIcon className="w-4 h-4 inline ml-1" />
-              </p>
+              <ArrowLeftIcon className="w-4 h-4 inline mr-1" /> All Work
             </button>
-          )}
+            {nextStudy && (
+              <button onClick={onNext} className="text-right group">
+                <SectionLabel>Next Case Study</SectionLabel>
+                <p className="text-lg font-light text-[#3B3B3B] mt-1 group-hover:text-[#D6006D] transition-colors">
+                  {nextStudy.title} <ArrowRightIcon className="w-4 h-4 inline ml-1" />
+                </p>
+              </button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </article>
   )
 }
