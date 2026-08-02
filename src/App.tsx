@@ -293,6 +293,69 @@ function ImagePlaceholder({
   )
 }
 
+function Lightbox({
+  images,
+  index,
+  onClose,
+  onNavigate,
+}: {
+  images: string[]
+  index: number
+  onClose: () => void
+  onNavigate: (i: number) => void
+}) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') onNavigate(Math.max(0, index - 1))
+      if (e.key === 'ArrowRight') onNavigate(Math.min(images.length - 1, index + 1))
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [index, images.length, onClose, onNavigate])
+
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-black/88 flex items-center justify-center"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-5xl px-14 py-10"
+        onClick={e => e.stopPropagation()}
+      >
+        <img src={images[index]} alt="" className="max-h-[82vh] w-full object-contain" />
+        {images.length > 1 && (
+          <p className="text-center text-white/35 text-[11px] tracking-[0.2em] uppercase mt-4">
+            {index + 1} / {images.length}
+          </p>
+        )}
+        {index > 0 && (
+          <button
+            onClick={() => onNavigate(index - 1)}
+            className="absolute left-2 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors p-2"
+          >
+            <ArrowLeftIcon className="w-6 h-6" />
+          </button>
+        )}
+        {index < images.length - 1 && (
+          <button
+            onClick={() => onNavigate(index + 1)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors p-2"
+          >
+            <ArrowRightIcon className="w-6 h-6" />
+          </button>
+        )}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-white/50 hover:text-white transition-colors text-2xl leading-none w-8 h-8 flex items-center justify-center"
+        >
+          ×
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function ValidMindBody({
   study,
   onBack,
@@ -305,7 +368,38 @@ function ValidMindBody({
   nextStudy: (typeof caseStudies)[0] | null
 }) {
   const sw = study.swatchHex
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+
+  const vmDecisions = [
+    {
+      n: '01',
+      title: 'Establish a design-system foundation in Figma',
+      body: 'I created a variable-based Figma design system aligned with Chakra UI, giving the team reusable components, patterns, and templates for more consistent feature delivery.',
+      images: ['/images/validmind/Design-system.png', '/images/validmind/Pattern.png'],
+    },
+    {
+      n: '02',
+      title: 'Improve design-to-development alignment',
+      body: "I expanded my front-end knowledge to create realistic live-code prototypes and make targeted UI improvements in developers' branches. Working closer to implementation helped ensure design-system patterns were applied accurately.",
+    },
+    {
+      n: '03',
+      title: 'Create context-aware AI workflows',
+      body: 'I established a reusable AI guidance layer through an instructions.md file that captured product, design-system, and codebase conventions. Combined with reusable components and templates, it enabled more consistent output, targeted code changes, and lower token usage.',
+    },
+  ]
+  const allImages = vmDecisions.flatMap(d => d.images ?? [])
+
   return (
+    <>
+    {lightboxIndex !== null && (
+      <Lightbox
+        images={allImages}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onNavigate={setLightboxIndex}
+      />
+    )}
     <div className="max-w-5xl mx-auto px-6 md:px-12">
       {/* Confidential callout */}
       <div className="border-l-2 pl-5 py-3 my-10" style={{ borderColor: `${sw}80`, backgroundColor: `${sw}08` }}>
@@ -372,23 +466,7 @@ function ValidMindBody({
       {/* Key Decisions */}
       <ContentSection label="Key Decisions">
         <div className="space-y-12">
-          {[
-            {
-              n: '01',
-              title: 'Establish a design-system foundation in Figma',
-              body: 'I created a variable-based Figma design system aligned with Chakra UI, giving the team reusable components, patterns, and templates for more consistent feature delivery.',
-            },
-            {
-              n: '02',
-              title: 'Improve design-to-development alignment',
-              body: "I expanded my front-end knowledge to create realistic live-code prototypes and make targeted UI improvements in developers' branches. Working closer to implementation helped ensure design-system patterns were applied accurately.",
-            },
-            {
-              n: '03',
-              title: 'Create context-aware AI workflows',
-              body: 'I established a reusable AI guidance layer through an instructions.md file that captured product, design-system, and codebase conventions. Combined with reusable components and templates, it enabled more consistent output, targeted code changes, and lower token usage.',
-            },
-          ].map(({ n, title, body }) => (
+          {vmDecisions.map(({ n, title, body, images }) => (
             <div key={n}>
               <div className="flex gap-5">
                 <span className="shrink-0 text-[12px] font-medium mt-1" style={{ color: sw }}>{n}</span>
@@ -397,8 +475,19 @@ function ValidMindBody({
                   <p className="text-base text-[#4A4A4A] leading-relaxed">{body}</p>
                 </div>
               </div>
-              <div className="mt-6">
-                <ImagePlaceholder ratio="16/9" swatchHex={sw} />
+              <div className="mt-6 space-y-4">
+                {images && images.length > 0
+                  ? images.map((src) => (
+                      <img
+                        key={src}
+                        src={src}
+                        alt={title}
+                        className="w-full object-contain border border-[#F1F1F1] cursor-zoom-in"
+                        onClick={() => setLightboxIndex(allImages.indexOf(src))}
+                      />
+                    ))
+                  : <ImagePlaceholder ratio="16/9" swatchHex={sw} />
+                }
               </div>
             </div>
           ))}
@@ -518,6 +607,7 @@ function ValidMindBody({
         )}
       </div>
     </div>
+    </>
   )
 }
 
@@ -532,8 +622,24 @@ function CaseStudyContent({
   onNext: () => void
   nextStudy: (typeof caseStudies)[0] | null
 }) {
+  const allImages = [
+    study.images?.hero,
+    study.images?.flow,
+    study.images?.wireframes,
+    study.images?.annotated,
+  ].filter((s): s is string => Boolean(s))
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+
   return (
     <article>
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={allImages}
+          index={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onNavigate={setLightboxIndex}
+        />
+      )}
       {/* ── Hero header ── */}
       <div className="pt-14 pb-12 md:pt-20 md:pb-16 border-b border-[#E6E6E6]">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
@@ -553,8 +659,9 @@ function CaseStudyContent({
           <img
             src={study.images.hero}
             alt={`${study.title} hero`}
-            className="w-full object-cover"
+            className="w-full object-cover border border-[#F1F1F1] cursor-zoom-in"
             style={{ aspectRatio: '16/9' }}
+            onClick={() => setLightboxIndex(allImages.indexOf(study.images!.hero!))}
           />
         ) : (
           <ImagePlaceholder ratio="16/9" swatchHex={study.swatchHex} />
@@ -591,7 +698,7 @@ function CaseStudyContent({
           {/* Mid image */}
           <div className="py-12">
             {study.images?.flow ? (
-              <img src={study.images.flow} alt="End-to-end lottery flow" className="w-full object-contain" />
+              <img src={study.images.flow} alt="End-to-end lottery flow" className="w-full object-contain border border-[#F1F1F1] cursor-zoom-in" onClick={() => setLightboxIndex(allImages.indexOf(study.images!.flow!))} />
             ) : (
               <ImagePlaceholder ratio="3/2" swatchHex={study.swatchHex} />
             )}
@@ -606,10 +713,10 @@ function CaseStudyContent({
             {study.images?.wireframes || study.images?.annotated ? (
               <div className="flex flex-col gap-8">
                 {study.images.wireframes && (
-                  <img src={study.images.wireframes} alt="Low-fidelity wireframes" className="w-full object-contain" />
+                  <img src={study.images.wireframes} alt="Low-fidelity wireframes" className="w-full object-contain border border-[#F1F1F1] cursor-zoom-in" onClick={() => setLightboxIndex(allImages.indexOf(study.images!.wireframes!))} />
                 )}
                 {study.images.annotated && (
-                  <img src={study.images.annotated} alt="Annotated mobile UI screens" className="w-full object-contain" />
+                  <img src={study.images.annotated} alt="Annotated mobile UI screens" className="w-full object-contain border border-[#F1F1F1] cursor-zoom-in" onClick={() => setLightboxIndex(allImages.indexOf(study.images!.annotated!))} />
                 )}
               </div>
             ) : (
