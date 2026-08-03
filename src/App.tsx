@@ -19,6 +19,7 @@ const caseStudies = [
     swatchHex: '#1A3A5C',
     featured: true,
     password: 'portfolio2026!',
+    images: { hero: '/images/validmind/validmind-hero.png' },
     overview: '',
     context: '',
     role: '',
@@ -60,6 +61,7 @@ const caseStudies = [
     number: '02',
     title: 'Flightdeck Estimator',
     client: 'Staples',
+    images: { hero: '/images/estimator.png' },
     category: 'Enterprise · B2B Tool',
     year: '2019',
     tagline: 'Redesigning a complex estimation tool for retail operations teams spread across North America.',
@@ -86,6 +88,7 @@ const caseStudies = [
     number: '03',
     title: 'MSN News App',
     client: 'Microsoft',
+    images: { hero: '/images/msnnews.png' },
     category: 'Consumer · Mobile',
     year: '2017',
     tagline: 'Reimagining a daily news companion to surface relevant content through context, not just recency.',
@@ -112,6 +115,7 @@ const caseStudies = [
     number: '04',
     title: 'Love Mondays',
     client: 'Glassdoor',
+    images: { hero: '/images/lovemondays.png' },
     category: 'Consumer · Web & Mobile',
     year: '2016',
     tagline: 'Building a trusted workplace review platform for the Brazilian market from the ground up.',
@@ -293,65 +297,38 @@ function ImagePlaceholder({
   )
 }
 
-function Lightbox({
-  images,
-  index,
-  onClose,
-  onNavigate,
-}: {
-  images: string[]
-  index: number
-  onClose: () => void
-  onNavigate: (i: number) => void
-}) {
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-      if (e.key === 'ArrowLeft') onNavigate(Math.max(0, index - 1))
-      if (e.key === 'ArrowRight') onNavigate(Math.min(images.length - 1, index + 1))
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [index, images.length, onClose, onNavigate])
-
+function ImageCarousel({ images, alt = '' }: { images: string[]; alt?: string }) {
+  const [idx, setIdx] = useState(0)
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/88 flex items-center justify-center"
-      onClick={onClose}
-    >
-      <div
-        className="relative w-full max-w-5xl px-14 py-10"
-        onClick={e => e.stopPropagation()}
-      >
-        <img src={images[index]} alt="" className="max-h-[82vh] w-full object-contain" />
-        {images.length > 1 && (
-          <p className="text-center text-white/35 text-[11px] tracking-[0.2em] uppercase mt-4">
-            {index + 1} / {images.length}
+    <div className="relative">
+      <img
+        src={images[idx]}
+        alt={alt}
+        className="w-full object-contain border border-[#F1F1F1]"
+      />
+      {images.length > 1 && (
+        <>
+          {idx > 0 && (
+            <button
+              onClick={() => setIdx(i => i - 1)}
+              className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 shadow-sm transition-colors"
+            >
+              <ArrowLeftIcon className="w-4 h-4 text-[#4A4A4A]" />
+            </button>
+          )}
+          {idx < images.length - 1 && (
+            <button
+              onClick={() => setIdx(i => i + 1)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 shadow-sm transition-colors"
+            >
+              <ArrowRightIcon className="w-4 h-4 text-[#4A4A4A]" />
+            </button>
+          )}
+          <p className="text-center text-[11px] tracking-[0.2em] uppercase text-[#9A9A9A] mt-3">
+            {idx + 1} / {images.length}
           </p>
-        )}
-        {index > 0 && (
-          <button
-            onClick={() => onNavigate(index - 1)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors p-2"
-          >
-            <ArrowLeftIcon className="w-6 h-6" />
-          </button>
-        )}
-        {index < images.length - 1 && (
-          <button
-            onClick={() => onNavigate(index + 1)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors p-2"
-          >
-            <ArrowRightIcon className="w-6 h-6" />
-          </button>
-        )}
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-white/50 hover:text-white transition-colors text-2xl leading-none w-8 h-8 flex items-center justify-center"
-        >
-          ×
-        </button>
-      </div>
+        </>
+      )}
     </div>
   )
 }
@@ -368,7 +345,6 @@ function ValidMindBody({
   nextStudy: (typeof caseStudies)[0] | null
 }) {
   const sw = study.swatchHex
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const vmDecisions = [
     {
@@ -388,23 +364,14 @@ function ValidMindBody({
       body: 'I established a reusable AI guidance layer through an instructions.md file that captured product, design-system, and codebase conventions. Combined with reusable components and templates, it enabled more consistent output, targeted code changes, and lower token usage.',
     },
   ]
-  const allImages = vmDecisions.flatMap(d => d.images ?? [])
 
   return (
     <>
-    {lightboxIndex !== null && (
-      <Lightbox
-        images={allImages}
-        index={lightboxIndex}
-        onClose={() => setLightboxIndex(null)}
-        onNavigate={setLightboxIndex}
-      />
-    )}
     <div className="max-w-5xl mx-auto px-6 md:px-12">
       {/* Confidential callout */}
       <div className="border-l-2 pl-5 py-3 my-10" style={{ borderColor: `${sw}80`, backgroundColor: `${sw}08` }}>
         <p className="text-sm text-[#4A4A4A]">
-          <strong className="text-[#3B3B3B]">Confidential — password required.</strong>{' '}
+          <strong className="text-[#3B3B3B]">Confidential.</strong>{' '}
           This case study includes non-public work completed for ValidMind.
         </p>
       </div>
@@ -434,147 +401,141 @@ function ValidMindBody({
         </div>
       </div>
 
-      {/* Context */}
-      <ContentSection label="Context">
-        <div className="space-y-4">
-          <p className="text-base text-[#4A4A4A] leading-relaxed">
-            When I joined, the product experience and front-end framework were already established, but the design team did not yet have a shared Figma design system.
-          </p>
-          <p className="text-base text-[#4A4A4A] leading-relaxed">
-            At the same time, the platform supported AI-governance work across organizations of different sizes and levels of maturity. Each feature required a strong understanding of the people involved, their responsibilities, and their approval and review processes.
-          </p>
-          <p className="text-base text-[#4A4A4A] leading-relaxed">
-            The overarching challenge was that teams were managing complex work across multiple roles, processes, and technical and regulatory constraints without a consistently structured product experience.
-          </p>
+      {/* Context — text then full-width image */}
+      <div className="border-b border-[#E6E6E6]">
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pt-14 pb-10">
+          <div className="pt-0.5"><SectionLabel>Context</SectionLabel></div>
+          <div className="max-w-2xl space-y-4">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              When I joined, the product experience and front-end framework were already established, but the design team did not yet have a shared Figma design system.
+            </p>
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              At the same time, the platform supported AI-governance work across organizations of different sizes and levels of maturity. Each feature required a strong understanding of the people involved, their responsibilities, and their approval and review processes.
+            </p>
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              The overarching challenge was that teams were managing complex work across multiple roles, processes, and technical and regulatory constraints without a consistently structured product experience.
+            </p>
+          </div>
         </div>
-        <div className="mt-8">
+        <div className="pb-14">
           <ImagePlaceholder ratio="16/9" swatchHex={sw} />
         </div>
-      </ContentSection>
+      </div>
 
-      {/* Approach */}
-      <ContentSection label="Approach">
-        <p className="text-base text-[#4A4A4A] leading-relaxed">
-          I grounded each feature in user needs, business goals, governance workflows, and technical constraints. My process combined research, ideation, prototyping, and validation with AI-assisted exploration, structured deliverables, live-code prototypes, and high-level usability checks.
-        </p>
-        <div className="mt-8 grid grid-cols-2 gap-4">
+      {/* Approach — text then full-width images */}
+      <div className="border-b border-[#E6E6E6]">
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pt-14 pb-10">
+          <div className="pt-0.5"><SectionLabel>Approach</SectionLabel></div>
+          <div className="max-w-2xl">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              I grounded each feature in user needs, business goals, governance workflows, and technical constraints. My process combined research, ideation, prototyping, and validation with AI-assisted exploration, structured deliverables, live-code prototypes, and high-level usability checks.
+            </p>
+          </div>
+        </div>
+        <div className="pb-14 grid grid-cols-2 gap-4">
           <ImagePlaceholder ratio="4/3" swatchHex={sw} />
           <ImagePlaceholder ratio="4/3" swatchHex={sw} />
         </div>
-      </ContentSection>
+      </div>
 
-      {/* Key Decisions */}
-      <ContentSection label="Key Decisions">
-        <div className="space-y-12">
-          {vmDecisions.map(({ n, title, body, images }) => (
-            <div key={n}>
-              <div className="flex gap-5">
+      {/* Key Decisions — each decision: text row then full-width image */}
+      <div className="border-b border-[#E6E6E6]">
+        {vmDecisions.map(({ n, title, body, images }, idx) => (
+          <React.Fragment key={n}>
+            <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pt-14 pb-10">
+              <div className="pt-0.5">
+                {idx === 0 && <SectionLabel>Key Decisions</SectionLabel>}
+              </div>
+              <div className="max-w-2xl flex gap-5">
                 <span className="shrink-0 text-[12px] font-medium mt-1" style={{ color: sw }}>{n}</span>
                 <div>
                   <p className="text-base font-medium text-[#3B3B3B] mb-2">{title}</p>
                   <p className="text-base text-[#4A4A4A] leading-relaxed">{body}</p>
                 </div>
               </div>
-              <div className="mt-6 space-y-4">
-                {images && images.length > 0
-                  ? images.map((src) => (
-                      <img
-                        key={src}
-                        src={src}
-                        alt={title}
-                        className="w-full object-contain border border-[#F1F1F1] cursor-zoom-in"
-                        onClick={() => setLightboxIndex(allImages.indexOf(src))}
-                      />
-                    ))
-                  : <ImagePlaceholder ratio="16/9" swatchHex={sw} />
-                }
-              </div>
             </div>
-          ))}
-        </div>
-      </ContentSection>
+            <div className="pb-14">
+              {images && images.length > 0
+                ? <ImageCarousel images={images} alt={title} />
+                : <ImagePlaceholder ratio="16/9" swatchHex={sw} />
+              }
+            </div>
+          </React.Fragment>
+        ))}
+      </div>
 
-      {/* Feature Spotlight */}
-      <div className="py-14 border-b border-[#E6E6E6]">
-        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12">
-          <div className="pt-0.5">
-            <SectionLabel>Feature Spotlight</SectionLabel>
-          </div>
+      {/* Feature Spotlight — text rows then full-width images */}
+      <div className="border-b border-[#E6E6E6]">
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pt-14 pb-10">
+          <div className="pt-0.5"><SectionLabel>Feature Spotlight</SectionLabel></div>
           <div className="max-w-2xl">
-            <h2 className="text-[22px] md:text-[26px] font-light text-[#3B3B3B] mb-10">Validation Report</h2>
-            <div className="space-y-14">
-
-              <div>
-                <SectionLabel>The need</SectionLabel>
-                <p className="text-base text-[#4A4A4A] leading-relaxed mt-4">
-                  The Validation Report feature supported a key part of the AI-governance workflow: helping users create, organize, review, and act on validation information.
-                </p>
-                <div className="mt-6">
-                  <ImagePlaceholder ratio="16/9" swatchHex={sw} />
-                </div>
-              </div>
-
-              <div>
-                <SectionLabel>Discovery</SectionLabel>
-                <p className="text-base text-[#4A4A4A] leading-relaxed mt-4">
-                  I worked with stakeholders and subject matter experts to map the validation process, identify the information needed at each stage, and understand requirements across organizations.
-                </p>
-                <div className="mt-6">
-                  <ImagePlaceholder ratio="16/9" swatchHex={sw} />
-                </div>
-              </div>
-
-              <div>
-                <SectionLabel>Design approach</SectionLabel>
-                <p className="text-base text-[#4A4A4A] leading-relaxed mt-4">
-                  I designed the report around the validator's review cycle, making risk information, evidence, and findings easier to access and act on at the report, page, or section level.
-                </p>
-                <div className="mt-6">
-                  <ImagePlaceholder ratio="4/3" swatchHex={sw} />
-                </div>
-              </div>
-
-              <div>
-                <SectionLabel>Key decisions</SectionLabel>
-                <ul className="space-y-6 mt-4">
-                  {[
-                    {
-                      title: 'Use a layered, flexible report structure',
-                      body: 'I retained the report overview and added section-level spaces for documentation, risk assessments, evidence, and findings. Validators could run AI-assisted features across the full report, a page, or a specific section.',
-                    },
-                    {
-                      title: 'Surface configurable related content',
-                      body: "Instead of searching across pages, validators received recommendations for evidence to link or information to flag. Relevance settings were configurable to fit each organization's validation process.",
-                    },
-                    {
-                      title: 'Keep humans in control of AI assistance',
-                      body: 'AI helped retrieve risk information, recommend evidence, and generate findings. Users reviewed and approved every suggestion, and each action was recorded for auditability.',
-                    },
-                  ].map(({ title, body }) => (
-                    <li key={title}>
-                      <p className="text-base font-medium text-[#3B3B3B] mb-1">{title}</p>
-                      <p className="text-base text-[#4A4A4A] leading-relaxed">{body}</p>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-6">
-                  <ImagePlaceholder ratio="16/9" swatchHex={sw} />
-                </div>
-              </div>
-
-              <div>
-                <SectionLabel>Implementation and quality</SectionLabel>
-                <p className="text-base text-[#4A4A4A] leading-relaxed mt-4">
-                  I collaborated with engineering to translate the experience into reusable, production-ready components. The AI guidance layer supported targeted code changes within established Chakra UI and product conventions.
-                </p>
-                <div className="mt-6">
-                  <ImagePlaceholder ratio="16/9" swatchHex={sw} />
-                </div>
-              </div>
-
-            </div>
+            <h2 className="text-[22px] md:text-[26px] font-light text-[#3B3B3B]">Validation Report</h2>
           </div>
         </div>
+
+        {/* The need */}
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
+          <div className="pt-0.5"><SectionLabel>The need</SectionLabel></div>
+          <div className="max-w-2xl">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              The Validation Report feature supported a key part of the AI-governance workflow: helping users create, organize, review, and act on validation information.
+            </p>
+          </div>
+        </div>
+        <div className="pb-14"><ImagePlaceholder ratio="16/9" swatchHex={sw} /></div>
+
+        {/* Discovery */}
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
+          <div className="pt-0.5"><SectionLabel>Discovery</SectionLabel></div>
+          <div className="max-w-2xl">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              I worked with stakeholders and subject matter experts to map the validation process, identify the information needed at each stage, and understand requirements across organizations.
+            </p>
+          </div>
+        </div>
+        <div className="pb-14"><ImagePlaceholder ratio="16/9" swatchHex={sw} /></div>
+
+        {/* Design approach */}
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
+          <div className="pt-0.5"><SectionLabel>Design approach</SectionLabel></div>
+          <div className="max-w-2xl">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              I designed the report around the validator's review cycle, making risk information, evidence, and findings easier to access and act on at the report, page, or section level.
+            </p>
+          </div>
+        </div>
+        <div className="pb-14"><ImagePlaceholder ratio="4/3" swatchHex={sw} /></div>
+
+        {/* Key decisions */}
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
+          <div className="pt-0.5"><SectionLabel>Key decisions</SectionLabel></div>
+          <div className="max-w-2xl">
+            <ul className="space-y-6">
+              {[
+                { title: 'Use a layered, flexible report structure', body: 'I retained the report overview and added section-level spaces for documentation, risk assessments, evidence, and findings. Validators could run AI-assisted features across the full report, a page, or a specific section.' },
+                { title: 'Surface configurable related content', body: "Instead of searching across pages, validators received recommendations for evidence to link or information to flag. Relevance settings were configurable to fit each organization's validation process." },
+                { title: 'Keep humans in control of AI assistance', body: 'AI helped retrieve risk information, recommend evidence, and generate findings. Users reviewed and approved every suggestion, and each action was recorded for auditability.' },
+              ].map(({ title, body }) => (
+                <li key={title}>
+                  <p className="text-base font-medium text-[#3B3B3B] mb-1">{title}</p>
+                  <p className="text-base text-[#4A4A4A] leading-relaxed">{body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="pb-14"><ImagePlaceholder ratio="16/9" swatchHex={sw} /></div>
+
+        {/* Implementation */}
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
+          <div className="pt-0.5"><SectionLabel>Implementation and quality</SectionLabel></div>
+          <div className="max-w-2xl">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">
+              I collaborated with engineering to translate the experience into reusable, production-ready components. The AI guidance layer supported targeted code changes within established Chakra UI and product conventions.
+            </p>
+          </div>
+        </div>
+        <div className="pb-14"><ImagePlaceholder ratio="16/9" swatchHex={sw} /></div>
       </div>
 
       {/* Outcomes & Learnings */}
@@ -622,24 +583,8 @@ function CaseStudyContent({
   onNext: () => void
   nextStudy: (typeof caseStudies)[0] | null
 }) {
-  const allImages = [
-    study.images?.hero,
-    study.images?.flow,
-    study.images?.wireframes,
-    study.images?.annotated,
-  ].filter((s): s is string => Boolean(s))
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
-
   return (
     <article>
-      {lightboxIndex !== null && (
-        <Lightbox
-          images={allImages}
-          index={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-          onNavigate={setLightboxIndex}
-        />
-      )}
       {/* ── Hero header ── */}
       <div className="pt-14 pb-12 md:pt-20 md:pb-16 border-b border-[#E6E6E6]">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
@@ -659,9 +604,7 @@ function CaseStudyContent({
           <img
             src={study.images.hero}
             alt={`${study.title} hero`}
-            className="w-full object-cover border border-[#F1F1F1] cursor-zoom-in"
-            style={{ aspectRatio: '16/9' }}
-            onClick={() => setLightboxIndex(allImages.indexOf(study.images!.hero!))}
+            className="w-full border border-[#F1F1F1]"
           />
         ) : (
           <ImagePlaceholder ratio="16/9" swatchHex={study.swatchHex} />
@@ -698,7 +641,7 @@ function CaseStudyContent({
           {/* Mid image */}
           <div className="py-12">
             {study.images?.flow ? (
-              <img src={study.images.flow} alt="End-to-end lottery flow" className="w-full object-contain border border-[#F1F1F1] cursor-zoom-in" onClick={() => setLightboxIndex(allImages.indexOf(study.images!.flow!))} />
+              <img src={study.images.flow} alt="End-to-end lottery flow" className="w-full object-contain border border-[#F1F1F1]" />
             ) : (
               <ImagePlaceholder ratio="3/2" swatchHex={study.swatchHex} />
             )}
@@ -711,14 +654,9 @@ function CaseStudyContent({
           {/* Second mid image */}
           <div className="py-12">
             {study.images?.wireframes || study.images?.annotated ? (
-              <div className="flex flex-col gap-8">
-                {study.images.wireframes && (
-                  <img src={study.images.wireframes} alt="Low-fidelity wireframes" className="w-full object-contain border border-[#F1F1F1] cursor-zoom-in" onClick={() => setLightboxIndex(allImages.indexOf(study.images!.wireframes!))} />
-                )}
-                {study.images.annotated && (
-                  <img src={study.images.annotated} alt="Annotated mobile UI screens" className="w-full object-contain border border-[#F1F1F1] cursor-zoom-in" onClick={() => setLightboxIndex(allImages.indexOf(study.images!.annotated!))} />
-                )}
-              </div>
+              <ImageCarousel
+                images={[study.images.wireframes, study.images.annotated].filter((s): s is string => Boolean(s))}
+              />
             ) : (
               <div className="grid grid-cols-2 gap-4">
                 <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
@@ -837,14 +775,23 @@ function CaseStudyRow({
       {study.featured ? (
         /* Featured layout: full-width image on top, text below */
         <div className="max-w-5xl mx-auto px-6 md:px-12">
-          <div
-            onClick={onClick}
-            className="w-full aspect-[16/9] cursor-pointer hover:opacity-90 transition-opacity duration-200 mt-10 md:mt-14"
-            style={{
-              backgroundColor: `${study.swatchHex}12`,
-              borderTop: `3px solid ${study.swatchHex}30`,
-            }}
-          />
+          {study.images?.hero ? (
+            <img
+              src={study.images.hero}
+              alt={study.title}
+              onClick={onClick}
+              className="w-full cursor-pointer hover:opacity-90 transition-opacity duration-200 mt-10 md:mt-14 border border-[#F1F1F1]"
+            />
+          ) : (
+            <div
+              onClick={onClick}
+              className="w-full aspect-[16/9] cursor-pointer hover:opacity-90 transition-opacity duration-200 mt-10 md:mt-14"
+              style={{
+                backgroundColor: `${study.swatchHex}12`,
+                borderTop: `3px solid ${study.swatchHex}30`,
+              }}
+            />
+          )}
           <div className="pt-6 pb-10 md:pb-14">
             <div className="flex items-center gap-3 mb-5">
               <span className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">{study.client}</span>
@@ -895,14 +842,23 @@ function CaseStudyRow({
               <p className="text-[11px] text-[#767676] mt-2 tracking-wide">Password required</p>
             )}
           </div>
-          <div
-            onClick={onClick}
-            className="w-full aspect-[4/3] cursor-pointer hover:opacity-90 transition-opacity duration-200"
-            style={{
-              backgroundColor: `${study.swatchHex}12`,
-              borderTop: `3px solid ${study.swatchHex}30`,
-            }}
-          />
+          {study.images?.hero ? (
+            <img
+              src={study.images.hero}
+              alt={study.title}
+              onClick={onClick}
+              className="w-full cursor-pointer hover:opacity-90 transition-opacity duration-200 border border-[#F1F1F1]"
+            />
+          ) : (
+            <div
+              onClick={onClick}
+              className="w-full aspect-[4/3] cursor-pointer hover:opacity-90 transition-opacity duration-200"
+              style={{
+                backgroundColor: `${study.swatchHex}12`,
+                borderTop: `3px solid ${study.swatchHex}30`,
+              }}
+            />
+          )}
         </div>
       )}
     </div>
