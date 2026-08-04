@@ -50,7 +50,7 @@ const caseStudies = [
       'Design within a regulated product context — The product needed to comply with local gambling regulations while maintaining an engaging sports-event experience.',
     ],
     images: {
-      hero: '/images/multilot/hero.png',
+      hero: '/images/5050.png',
       flow: '/images/multilot/flow.png',
       wireframes: '/images/multilot/wireframes.png',
       annotated: '/images/multilot/annotated.png',
