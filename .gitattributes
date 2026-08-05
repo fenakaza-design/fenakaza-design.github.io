@@ -11,7 +11,8 @@
 # ---------------------------------------------------------------------------
 # Video
 # ---------------------------------------------------------------------------
-*.mp4                filter=lfs diff=lfs merge=lfs -text
+# *.mp4 intentionally not tracked by LFS — GitHub Pages cannot serve LFS files
+# *.mp4                filter=lfs diff=lfs merge=lfs -text
 *.mov                filter=lfs diff=lfs merge=lfs -text
 *.avi                filter=lfs diff=lfs merge=lfs -text
 *.mkv                filter=lfs diff=lfs merge=lfs -text
