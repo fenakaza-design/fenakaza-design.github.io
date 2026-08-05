@@ -18,7 +18,7 @@ const caseStudies = [
     tagline: 'Designing end-to-end features, a Figma design system, and AI-augmented workflows for an enterprise AI-governance platform.',
     swatchHex: '#1A3A5C',
     featured: true,
-    password: 'portfolio2026!',
+    password: 'fernanda2026',
     images: { hero: '/images/validmind/validmind-hero.png' },
     overview: '',
     context: '',
@@ -36,14 +36,14 @@ const caseStudies = [
     tagline: 'A mobile raffle and browser-based WebGL experience that brought personalized game moments to live sports events.',
     swatchHex: '#3D1A6B',
     featured: true,
-    password: 'portfolio2026!',
+    password: 'fernanda2026',
     overview:
       'Multilot 50/50 was created for online raffles during sports games. The experience combined a mobile lottery flow with a browser-based WebGL game. Players could use a selfie to generate a 3D animation that could be displayed on the venue jumbotron.',
     context:
       'The product needed to make a 50/50 raffle more engaging in a live sports setting while complying with local gambling regulations. The experience needed to support both the practical requirements of a regulated lottery flow and an entertaining, venue-scale game moment.',
     role: 'Lead Product Designer',
     approach:
-      'I mapped the raffle journey and supporting states, then translated the flow into low-fidelity wireframes and final UX/UI concepts. The work connected the mobile lottery experience with a selfie-based WebGL interaction and a jumbotron display.',
+      'I mapped the raffle journey and supporting states, then translated the flow into low-fidelity wireframes and final UX/UI concepts. The work connected the mobile lottery experience with a selfie-based WebGL interaction and a jumbotron display. The platform was designed to be customizable for any league or team, with an admin UI for managing the app, raffle settings, selfie moderation, and jumbotron content.',
     keyDecisions: [
       'Create a structured mobile raffle flow — The experience was documented as a detailed lottery journey, including key user paths and supporting states.',
       'Turn participation into a personalized live-event moment — The WebGL game used a player\'s selfie to generate a 3D animation that could be displayed on the jumbotron.',
@@ -54,6 +54,7 @@ const caseStudies = [
       flow: '/images/multilot/flow.png',
       wireframes: '/images/multilot/wireframes.png',
       annotated: '/images/multilot/annotated.png',
+      admin: '/images/multilot/admin.png',
     },
   },
   {
@@ -175,8 +176,12 @@ function PasswordGate({
   }, [])
 
   const attempt = () => {
-    setState('success')
-    setTimeout(onUnlock, 600)
+    if (value === study.password) {
+      setState('success')
+      setTimeout(onUnlock, 600)
+    } else {
+      setState('error')
+    }
   }
 
   return (
@@ -311,17 +316,17 @@ function ImageCarousel({ images, alt = '' }: { images: string[]; alt?: string })
           {idx > 0 && (
             <button
               onClick={() => setIdx(i => i - 1)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 shadow-sm transition-colors"
+              className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/65 rounded-full p-2 transition-colors"
             >
-              <ArrowLeftIcon className="w-4 h-4 text-[#4A4A4A]" />
+              <ArrowLeftIcon className="w-5 h-5 text-white" />
             </button>
           )}
           {idx < images.length - 1 && (
             <button
               onClick={() => setIdx(i => i + 1)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 shadow-sm transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/65 rounded-full p-2 transition-colors"
             >
-              <ArrowRightIcon className="w-4 h-4 text-[#4A4A4A]" />
+              <ArrowRightIcon className="w-5 h-5 text-white" />
             </button>
           )}
           <p className="text-center text-[11px] tracking-[0.2em] uppercase text-[#9A9A9A] mt-3">
@@ -355,13 +360,9 @@ function ValidMindBody({
     },
     {
       n: '02',
-      title: 'Improve design-to-development alignment',
-      body: "I expanded my front-end knowledge to create realistic live-code prototypes and make targeted UI improvements in developers' branches. Working closer to implementation helped ensure design-system patterns were applied accurately.",
-    },
-    {
-      n: '03',
-      title: 'Create context-aware AI workflows',
-      body: 'I established a reusable AI guidance layer through an instructions.md file that captured product, design-system, and codebase conventions. Combined with reusable components and templates, it enabled more consistent output, targeted code changes, and lower token usage.',
+      title: 'Extend the design system into code and AI workflows',
+      body: "I expanded my front-end knowledge to turn the Figma design system into realistic live-code prototypes and targeted UI improvements in developers' branches. I also created reusable AI guidance, components, and templates grounded in product, design-system, and codebase conventions—helping the team apply patterns accurately, make focused changes, and deliver more consistently.",
+      images: ['/images/validmind/cursor.png'],
     },
   ]
 
@@ -417,9 +418,6 @@ function ValidMindBody({
             </p>
           </div>
         </div>
-        <div className="pb-14">
-          <ImagePlaceholder ratio="16/9" swatchHex={sw} />
-        </div>
       </div>
 
       {/* Approach — text then full-width images */}
@@ -432,9 +430,14 @@ function ValidMindBody({
             </p>
           </div>
         </div>
-        <div className="pb-14 grid grid-cols-2 gap-4">
-          <ImagePlaceholder ratio="4/3" swatchHex={sw} />
-          <ImagePlaceholder ratio="4/3" swatchHex={sw} />
+        <div className="pb-14">
+          <ImageCarousel
+            images={[
+              '/images/validmind/userflow.png',
+              '/images/validmind/lifecycle.png',
+              '/images/validmind/variations.png',
+            ]}
+          />
         </div>
       </div>
 
@@ -482,7 +485,9 @@ function ValidMindBody({
             </p>
           </div>
         </div>
-        <div className="pb-14"><ImagePlaceholder ratio="16/9" swatchHex={sw} /></div>
+        <div className="pb-14">
+          <img src="/images/validmind/vr-intro.png" alt="Validation Report intro" className="w-full object-contain border border-[#F1F1F1]" />
+        </div>
 
         {/* Discovery */}
         <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
@@ -493,7 +498,9 @@ function ValidMindBody({
             </p>
           </div>
         </div>
-        <div className="pb-14"><ImagePlaceholder ratio="16/9" swatchHex={sw} /></div>
+        <div className="pb-14">
+          <ImageCarousel images={['/images/validmind/vr-painpoints.png', '/images/validmind/vr-userflow.png']} />
+        </div>
 
         {/* Design approach */}
         <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
@@ -504,7 +511,9 @@ function ValidMindBody({
             </p>
           </div>
         </div>
-        <div className="pb-14"><ImagePlaceholder ratio="4/3" swatchHex={sw} /></div>
+        <div className="pb-14">
+          <img src="/images/validmind/vr-lofi.png" alt="Design approach lo-fi" className="w-full object-contain border border-[#F1F1F1]" />
+        </div>
 
         {/* Key decisions */}
         <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
@@ -524,7 +533,9 @@ function ValidMindBody({
             </ul>
           </div>
         </div>
-        <div className="pb-14"><ImagePlaceholder ratio="16/9" swatchHex={sw} /></div>
+        <div className="pb-14">
+          <img src="/images/validmind/vr-approval.png" alt="Approval workflow" className="w-full object-contain border border-[#F1F1F1]" />
+        </div>
 
         {/* Implementation */}
         <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
@@ -535,7 +546,13 @@ function ValidMindBody({
             </p>
           </div>
         </div>
-        <div className="pb-14"><ImagePlaceholder ratio="16/9" swatchHex={sw} /></div>
+        <div className="pb-14">
+          <video
+            src="/images/validmind/vr-evidence.mp4"
+            controls
+            className="w-full border border-[#F1F1F1]"
+          />
+        </div>
       </div>
 
       {/* Outcomes & Learnings */}
@@ -641,7 +658,9 @@ function CaseStudyContent({
           {/* Mid image */}
           <div className="py-12">
             {study.images?.flow ? (
-              <img src={study.images.flow} alt="End-to-end lottery flow" className="w-full object-contain border border-[#F1F1F1]" />
+              <ImageCarousel
+                images={[study.images.flow, study.images.annotated].filter((s): s is string => Boolean(s))}
+              />
             ) : (
               <ImagePlaceholder ratio="3/2" swatchHex={study.swatchHex} />
             )}
@@ -655,7 +674,7 @@ function CaseStudyContent({
           <div className="py-12">
             {study.images?.wireframes || study.images?.annotated ? (
               <ImageCarousel
-                images={[study.images.wireframes, study.images.annotated].filter((s): s is string => Boolean(s))}
+                images={[study.images.wireframes, study.images.admin].filter((s): s is string => Boolean(s))}
               />
             ) : (
               <div className="grid grid-cols-2 gap-4">
