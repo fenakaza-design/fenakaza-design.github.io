@@ -89,7 +89,13 @@ const caseStudies = [
     number: '03',
     title: 'MSN News App',
     client: 'Microsoft',
-    images: { hero: '/images/msnnews.png' },
+    images: {
+      hero: '/images/msnnews.png',
+      flow: '/images/msn/user-journey-map.png',
+      wireframes: '/images/msn/lofi.png',
+      admin: '/images/msn/column.png',
+      extra: '/images/msn/whiteboard.png',
+    },
     category: 'Consumer · Mobile',
     year: '2017',
     tagline: 'Reimagining a daily news companion to surface relevant content through context, not just recency.',
@@ -568,24 +574,181 @@ function ValidMindBody({
       </ContentSection>
 
       {/* Navigation */}
-      <div className="py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="py-12 flex flex-row items-center justify-between gap-6">
         <button
           onClick={onBack}
-          className="text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#D6006D] transition-colors"
+          className="shrink-0 text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#D6006D] transition-colors"
         >
           <ArrowLeftIcon className="w-4 h-4 inline mr-1" /> All Work
         </button>
-        {nextStudy && (
-          <button onClick={onNext} className="text-right group">
+        {nextStudy ? (
+          <button onClick={onNext} className="text-right group min-w-0">
             <SectionLabel>Next Case Study</SectionLabel>
-            <p className="text-lg font-light text-[#3B3B3B] mt-1 group-hover:text-[#D6006D] transition-colors">
+            <p className="text-lg font-light text-[#3B3B3B] mt-1 group-hover:text-[#D6006D] transition-colors truncate">
               {nextStudy.title} <ArrowRightIcon className="w-4 h-4 inline ml-1" />
             </p>
           </button>
+        ) : (
+          <div />
         )}
       </div>
     </div>
     </>
+  )
+}
+
+function FlightdeckBody({
+  study,
+  onBack,
+  onNext,
+  nextStudy,
+}: {
+  study: (typeof caseStudies)[0]
+  onBack: () => void
+  onNext: () => void
+  nextStudy: (typeof caseStudies)[0] | null
+}) {
+  const sw = study.swatchHex
+  const s = '/images/staples/'
+  return (
+    <div className="max-w-5xl mx-auto px-6 md:px-12">
+      {/* Overview + sidebar metadata */}
+      <div className="grid md:grid-cols-[1fr_220px] gap-12 py-14 border-b border-[#E6E6E6]">
+        <div>
+          <SectionLabel>Overview</SectionLabel>
+          <p className="text-base text-[#4A4A4A] leading-relaxed mt-5">{study.overview}</p>
+        </div>
+        <div className="space-y-7 md:border-l md:border-[#E6E6E6] md:pl-10">
+          <div>
+            <SectionLabel>Role</SectionLabel>
+            <p className="text-base text-[#4A4A4A] leading-relaxed mt-2">{study.role}</p>
+          </div>
+          <div>
+            <SectionLabel>Category</SectionLabel>
+            <p className="text-base text-[#4A4A4A] mt-2">{study.category}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Business Need */}
+      <div className="border-b border-[#E6E6E6]">
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pt-14 pb-10">
+          <div className="pt-0.5"><SectionLabel>Business Need</SectionLabel></div>
+          <div className="max-w-2xl">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">The legacy application that supported the Staples Estimator Department to ensure business order quotes was not user-friendly, demanding lots of manual data entry and several weeks of training.</p>
+          </div>
+        </div>
+        <div className="pb-14">
+          <img src={`${s}est_old.png`} alt="Legacy quoting system" className="w-full border border-[#F1F1F1]" />
+        </div>
+      </div>
+
+      {/* Solution */}
+      <div className="border-b border-[#E6E6E6]">
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pt-14 pb-10">
+          <div className="pt-0.5"><SectionLabel>Solution</SectionLabel></div>
+          <div className="max-w-2xl space-y-4">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">We started the process by conducting a Discovery Phase, mapping the current quote creation, identifying the main data entry points and data collection process.</p>
+            <p className="text-base text-[#4A4A4A] leading-relaxed">Personas were created based on discoveries, highlighting their demographics, frustrations, needs and motivations. An ideal user flow was created after consulting with stakeholders and doing paper prototyping with the product team.</p>
+          </div>
+        </div>
+        <div className="pb-6 grid grid-cols-2 gap-4">
+          <img src={`${s}est3.png`} alt="Wireframes 1" className="w-full border border-[#F1F1F1]" />
+          <img src={`${s}est4.png`} alt="Wireframes 2" className="w-full border border-[#F1F1F1]" />
+        </div>
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
+          <div />
+          <div className="max-w-2xl">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">An ideal user flow were created after sessions of whiteboard sketches and paper prototyping with the product team.</p>
+          </div>
+        </div>
+        <div className="pb-10">
+          <img src={`${s}est_journey.png`} alt="User journey map" className="w-full border border-[#F1F1F1]" />
+        </div>
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
+          <div />
+          <div className="max-w-2xl">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">Roles, document status and actions were mapped to help the team understand the requirements of each step in the quote creation.</p>
+          </div>
+        </div>
+        <div className="pb-10">
+          <img src={`${s}est_flow2.png`} alt="Final hi-fi design" className="w-full border border-[#F1F1F1]" />
+        </div>
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
+          <div />
+          <div className="max-w-2xl space-y-4">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">Lo-fi wireframes were created to illustrate the final mockups with stakeholders, business analysts and developers before taking this to hi-fi production.</p>
+            <p className="text-base text-[#4A4A4A] leading-relaxed">A detailed style guide was created to help front-end developers keep consistency and accuracy on the UI and all their outputs. The style guide was created in Sketch app which generated a Sketch library to streamline the developing process.</p>
+          </div>
+        </div>
+        <div className="pb-6 grid grid-cols-2 gap-4">
+          <img src={`${s}est_guide1.png`} alt="Style guide 1" className="w-full border border-[#F1F1F1]" />
+          <img src={`${s}est_guide2.png`} alt="Style guide 2" className="w-full border border-[#F1F1F1]" />
+        </div>
+        <div className="pb-10">
+          <img src={`${s}est_5.png`} alt="Wireframes 3" className="w-full border border-[#F1F1F1]" />
+        </div>
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-10">
+          <div />
+          <div className="max-w-2xl">
+            <p className="text-base text-[#4A4A4A] leading-relaxed">Prototypes were created to test the components interactions before taking them to development.</p>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 pb-14">
+          <div />
+          <div>
+            <img src={`${s}est_interaction.gif`} alt="Prototype interaction" className="w-1/2 border border-[#F1F1F1]" />
+          </div>
+        </div>
+      </div>
+
+      {/* Delivered Results */}
+      <ContentSection label="Delivered Results">
+        <ul className="space-y-4">
+          {[
+            'Efficient, highly functional and user-friendly software, tailored to specific Staples needs but flexible as a white label solution',
+            'Cut turnaround time for quote in 50%',
+            'Estimated $320K/year in labor savings',
+            '3% gross margin increase due to accurate product cost',
+          ].map((item) => (
+            <li key={item} className="flex gap-4">
+              <span className="shrink-0 text-[12px] font-medium mt-1" style={{ color: sw }}>—</span>
+              <p className="text-base text-[#4A4A4A] leading-relaxed">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </ContentSection>
+
+      <div className="py-12 border-b border-[#E6E6E6]">
+        <img src={`${s}estimator1.png`} alt="Final Flightdeck Estimator" className="w-full border border-[#F1F1F1]" />
+      </div>
+
+      {study.learnings && (
+        <ContentSection label="Learnings">
+          <p className="text-base text-[#4A4A4A] leading-relaxed italic">{study.learnings}</p>
+        </ContentSection>
+      )}
+
+      {/* Navigation */}
+      <div className="py-12 flex flex-row items-center justify-between gap-6">
+        <button
+          onClick={onBack}
+          className="shrink-0 text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#D6006D] transition-colors"
+        >
+          <ArrowLeftIcon className="w-4 h-4 inline mr-1" /> All Work
+        </button>
+        {nextStudy ? (
+          <button onClick={onNext} className="text-right group min-w-0">
+            <SectionLabel>Next Case Study</SectionLabel>
+            <p className="text-lg font-light text-[#3B3B3B] mt-1 group-hover:text-[#D6006D] transition-colors truncate">
+              {nextStudy.title} <ArrowRightIcon className="w-4 h-4 inline ml-1" />
+            </p>
+          </button>
+        ) : (
+          <div />
+        )}
+      </div>
+    </div>
   )
 }
 
@@ -631,6 +794,8 @@ function CaseStudyContent({
       {/* ── Body ── */}
       {study.id === 'validmind' ? (
         <ValidMindBody study={study} onBack={onBack} onNext={onNext} nextStudy={nextStudy} />
+      ) : study.id === 'flightdeck' ? (
+        <FlightdeckBody study={study} onBack={onBack} onNext={onNext} nextStudy={nextStudy} />
       ) : (
         <div className="max-w-5xl mx-auto px-6 md:px-12">
           {/* Overview + sidebar metadata */}
@@ -673,9 +838,19 @@ function CaseStudyContent({
           {/* Second mid image */}
           <div className="py-12">
             {study.images?.wireframes || study.images?.annotated ? (
-              <ImageCarousel
-                images={[study.images.wireframes, study.images.admin].filter((s): s is string => Boolean(s))}
-              />
+              study.images?.extra ? (
+                <>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <img src={study.images.extra} className="w-full border border-[#F1F1F1]" />
+                    <img src={study.images.admin} className="w-full border border-[#F1F1F1]" />
+                  </div>
+                  <img src={study.images.wireframes} className="w-full border border-[#F1F1F1]" />
+                </>
+              ) : (
+                <ImageCarousel
+                  images={[study.images.wireframes, study.images.admin].filter((s): s is string => Boolean(s))}
+                />
+              )
             ) : (
               <div className="grid grid-cols-2 gap-4">
                 <ImagePlaceholder ratio="4/3" swatchHex={study.swatchHex} />
@@ -703,6 +878,12 @@ function CaseStudyContent({
             </ContentSection>
           )}
 
+          {study.id === 'msn-news' && (
+            <div className="py-12 border-b border-[#E6E6E6]">
+              <img src="/images/msn/msn.png" className="w-full border border-[#F1F1F1]" />
+            </div>
+          )}
+
           {study.learnings && (
             <ContentSection label="Learnings">
               <p className="text-base text-[#4A4A4A] leading-relaxed italic">{study.learnings}</p>
@@ -710,20 +891,22 @@ function CaseStudyContent({
           )}
 
           {/* ── Navigation ── */}
-          <div className="py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="py-12 flex flex-row items-center justify-between gap-6">
             <button
               onClick={onBack}
-              className="text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#D6006D] transition-colors"
+              className="shrink-0 text-[12px] tracking-[0.18em] uppercase text-[#767676] hover:text-[#D6006D] transition-colors"
             >
               <ArrowLeftIcon className="w-4 h-4 inline mr-1" /> All Work
             </button>
-            {nextStudy && (
-              <button onClick={onNext} className="text-right group">
+            {nextStudy ? (
+              <button onClick={onNext} className="text-right group min-w-0">
                 <SectionLabel>Next Case Study</SectionLabel>
-                <p className="text-lg font-light text-[#3B3B3B] mt-1 group-hover:text-[#D6006D] transition-colors">
+                <p className="text-lg font-light text-[#3B3B3B] mt-1 group-hover:text-[#D6006D] transition-colors truncate">
                   {nextStudy.title} <ArrowRightIcon className="w-4 h-4 inline ml-1" />
                 </p>
               </button>
+            ) : (
+              <div />
             )}
           </div>
         </div>
@@ -738,15 +921,18 @@ function CaseStudyPage({
   id,
   onBack,
   navigate,
+  globalUnlocked,
+  onGlobalUnlock,
 }: {
   id: string
   onBack: () => void
   navigate: (p: Page) => void
+  globalUnlocked: boolean
+  onGlobalUnlock: () => void
 }) {
   const index = caseStudies.findIndex((s) => s.id === id)
   const study = caseStudies[index]
   const nextStudy = caseStudies[index + 1] ?? null
-  const [unlocked, setUnlocked] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -754,11 +940,11 @@ function CaseStudyPage({
 
   if (!study) return null
 
-  if (!unlocked && study.password) {
+  if (!globalUnlocked && study.password) {
     return (
       <PasswordGate
         study={study}
-        onUnlock={() => setUnlocked(true)}
+        onUnlock={onGlobalUnlock}
         onBack={onBack}
       />
     )
@@ -1270,6 +1456,7 @@ function pathToPage(path: string): Page {
 
 export default function App() {
   const [page, setPage] = useState<Page>(() => pathToPage(window.location.pathname))
+  const [globalUnlocked, setGlobalUnlocked] = useState(false)
 
   const navigate = (p: Page) => {
     window.history.pushState(null, '', pageToPath(p))
@@ -1302,6 +1489,8 @@ export default function App() {
             id={page.id}
             onBack={() => navigate('home')}
             navigate={navigate}
+            globalUnlocked={globalUnlocked}
+            onGlobalUnlock={() => setGlobalUnlocked(true)}
           />
         )}
       </div>
