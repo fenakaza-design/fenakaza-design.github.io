@@ -120,29 +120,28 @@ const caseStudies = [
   {
     id: 'love-mondays',
     number: '04',
-    title: 'Love Mondays',
+    title: 'Love Mondays Android App',
     client: 'Glassdoor',
-    images: { hero: '/images/lovemondays.png' },
-    category: 'Consumer · Web & Mobile',
+    images: {
+      hero: '/images/lovemondays.png',
+      flow: '/images/lovemondays-app/lo-fi.png',
+      annotated: '/images/lovemondays-app/specs.png',
+      wireframes: '/images/lovemondays-app/app.png',
+      contextImage: '/images/lovemondays-app/onboarding.png',
+      flowSideBySide: true,
+    },
+    category: 'Consumer · Mobile',
     year: '2016',
-    tagline: 'Building a trusted workplace review platform for the Brazilian market from the ground up.',
+    tagline: 'A job search app designed to help users finding the perfect job by displaying company reviews and salary rankings.',
     swatchHex: '#1A4A2E',
     overview:
-      'Love Mondays is a Brazilian workplace review platform, a Glassdoor product built specifically for the local market. The brief was not to translate the Glassdoor product — it was to build something Brazilians would actually trust.',
+      'A job search app designed to help users finding the perfect job by displaying company reviews and salary rankings.',
     context:
-      'Brazilian job seekers lacked a reliable, trustworthy source of authentic company culture information. The existing Glassdoor product, translated to Portuguese, felt foreign. Our task was to understand what trust looks like in this context and design a system that could earn it.',
-    role: 'Lead Designer. Responsible for responsive web design, native app design, user research, and brand alignment with the Glassdoor parent brand.',
+      'LoveMondays decided to bring a solution to increase profits by adding jobs and focusing on a new Android app.',
+    role: 'Lead Designer',
     approach:
-      'I led a research phase in São Paulo with recent job changers, HR professionals, and job seekers at different career stages. The defining insight was that trust in this market was not built through data volume — it was built through specificity and through the feeling that the platform understood you as a Brazilian professional, not as a generic user.',
-    keyDecisions: [
-      'Simplified review submission flow — reduced the number of required fields and reframed questions to match how Brazilians naturally discuss their workplace experience.',
-      'Warmer visual tone — moved away from the Glassdoor green-on-grey palette toward something more conversational and humanized, while keeping enough brand alignment for credibility.',
-      'Offline-capable mobile states — connectivity was a real constraint for a meaningful segment of our users. We designed graceful degradation rather than treating connectivity as a given.',
-    ],
-    outcomes:
-      "The platform reached 500,000 reviews in its first year. The mobile app launched with a 4.6 rating. Love Mondays became one of Glassdoor's fastest-growing international markets.",
-    learnings:
-      'Localization is not translation. The deepest work was understanding what trust means in a different cultural context — and discovering that it often requires designing against your own assumptions about what a trustworthy product looks like.',
+      'Following the standards of Material Design and keeping brand identity through the usage of bold colour and custom iconography, resulted in a well-designed and functional job search app.\n\nSketches, wireframes and interactive prototypes were created to take advantage of quick rounds of validation with the team and users.',
+    keyDecisions: [],
   },
 ]
 
@@ -554,10 +553,11 @@ function ValidMindBody({
         </div>
         <div className="pb-14">
           <video
-            src="/images/validmind/vr-evidence.mp4"
             controls
             className="w-full border border-[#F1F1F1]"
-          />
+          >
+            <source src="/images/validmind/vr-evidence.mp4" type="video/mp4; codecs=avc1" />
+          </video>
         </div>
       </div>
 
@@ -820,19 +820,36 @@ function CaseStudyContent({
             <p className="text-base text-[#4A4A4A] leading-relaxed">{study.context}</p>
           </ContentSection>
 
+          {study.images?.contextImage && (
+            <div className="py-12">
+              <img src={study.images.contextImage} className="w-full border border-[#F1F1F1]" />
+            </div>
+          )}
+
           {/* Mid image */}
           <div className="py-12">
             {study.images?.flow ? (
-              <ImageCarousel
-                images={[study.images.flow, study.images.annotated].filter((s): s is string => Boolean(s))}
-              />
+              study.images.flowSideBySide && study.images.annotated ? (
+                <div className="grid grid-cols-2 gap-4">
+                  <img src={study.images.flow} className="w-full border border-[#F1F1F1]" />
+                  <img src={study.images.annotated} className="w-full border border-[#F1F1F1]" />
+                </div>
+              ) : (
+                <ImageCarousel
+                  images={[study.images.flow, study.images.annotated].filter((s): s is string => Boolean(s))}
+                />
+              )
             ) : (
               <ImagePlaceholder ratio="3/2" swatchHex={study.swatchHex} />
             )}
           </div>
 
           <ContentSection label="Approach">
-            <p className="text-base text-[#4A4A4A] leading-relaxed">{study.approach}</p>
+            <div className="space-y-4">
+              {study.approach.split('\n\n').map((para, i) => (
+                <p key={i} className="text-base text-[#4A4A4A] leading-relaxed">{para}</p>
+              ))}
+            </div>
           </ContentSection>
 
           {/* Second mid image */}
@@ -859,18 +876,20 @@ function CaseStudyContent({
             )}
           </div>
 
-          <ContentSection label="Key Decisions">
-            <ul className="space-y-7">
-              {study.keyDecisions.map((d, i) => (
-                <li key={i} className="flex gap-5">
-                  <span className="shrink-0 text-[12px] font-medium mt-1" style={{ color: study.swatchHex }}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <p className="text-base text-[#4A4A4A] leading-relaxed">{d}</p>
-                </li>
-              ))}
-            </ul>
-          </ContentSection>
+          {study.keyDecisions.length > 0 && (
+            <ContentSection label="Key Decisions">
+              <ul className="space-y-7">
+                {study.keyDecisions.map((d, i) => (
+                  <li key={i} className="flex gap-5">
+                    <span className="shrink-0 text-[12px] font-medium mt-1" style={{ color: study.swatchHex }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-base text-[#4A4A4A] leading-relaxed">{d}</p>
+                  </li>
+                ))}
+              </ul>
+            </ContentSection>
+          )}
 
           {study.outcomes && (
             <ContentSection label="Outcomes">
