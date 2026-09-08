@@ -145,6 +145,7 @@ const caseStudies = [
   },
   {
     id: 'lovemondays-activation',
+    images: { hero: '/images/lovemondays-growth.png?v=7790f57a' },
     number: '05',
     title: 'LoveMondays Growth Strategy',
     client: 'LoveMondays',
@@ -290,14 +291,16 @@ function ContentSection({
   children,
   wide = false,
   heading,
+  border = true,
 }: {
+  border?: boolean
   heading?: string
   label: string
   children: React.ReactNode
   wide?: boolean
 }) {
   return (
-    <div className="grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 py-14 border-b border-[#E6E6E6]">
+    <div className={`grid md:grid-cols-[180px_1fr] gap-6 md:gap-12 py-14 ${border ? 'border-b border-[#E6E6E6]' : ''}`}>
       <div className="pt-0.5">
         <SectionLabel>{label}</SectionLabel>
       </div>
@@ -812,14 +815,25 @@ function LoveMondaysBody({ study, onBack }: { study: (typeof caseStudies)[0]; on
         </div>
         <div className="space-y-7 md:border-l md:border-[#E6E6E6] md:pl-10">
           <div><SectionLabel>Role</SectionLabel><p className={`${body} mt-2`}>{study.role}</p></div>
-          <div><SectionLabel>Scope</SectionLabel><p className={`${body} mt-2`}>Research, interaction and visual design, prototyping, testing, and delivery.<br />Responsive web and Android</p></div>
+          <div><SectionLabel>Scope</SectionLabel><p className={`${body} mt-2`}>Research, interaction and visual design, prototyping, and testing.<br />Responsive web and Android</p></div>
         </div>
       </div>
 
-      <ContentSection label="The problem" heading="Understanding why users abandoned registration">
+      <ContentSection label="The problem" heading="Understanding why users abandoned registration" border={false}>
         <p className={body}>Professionals arrived ready to compare employers and pay, but access to deeper content required a contribution. We were an unfamiliar brand asking for a valid email and sensitive career information before people felt confident about the return.</p>
         <p className={`${body} mt-4`}>An account alone was not activation. Success meant completing registration and contributing salary or review data that could pass moderation and help someone else.</p>
       </ContentSection>
+
+      <div className="py-8 md:py-10 border-b border-[#E6E6E6]">
+        <img
+          src="/images/lovemondays-growth/barrier.png?v=de686871"
+          alt="LoveMondays contribution forms asking for company details and a workplace review, with anonymity guidance alongside the fields."
+          loading="lazy"
+          width={2022}
+          height={988}
+          className="w-full h-auto border border-[#F1F1F1]"
+        />
+      </div>
 
       <ContentSection label="Research & data" heading="Connecting funnel data with user research">
         <ul className="space-y-5">
@@ -832,13 +846,18 @@ function LoveMondaysBody({ study, onBack }: { study: (typeof caseStudies)[0]; on
         <p className={`${body} mt-6`}>The insight: people were willing to exchange value when the effort felt proportionate and they could trust that sharing would not expose them.</p>
       </ContentSection>
 
-      <LoveMondaysArtifactGroup
-        category="Research evidence"
-        items={[
-          { title: "Funnel analysis and research findings", detail: "Optional: an existing funnel view or anonymized research synthesis showing abandonment and concerns about sharing." },
-        ]}
-        caption="Funnel analysis identified where people stopped; interviews and usability studies explored why."
-      />
+      <figure className="py-8 md:py-10 border-b border-[#E6E6E6]">
+        <SectionLabel>Research evidence</SectionLabel>
+        <img
+          src="/images/lovemondays-growth/research.png?v=07d348b8"
+          alt="Remote usability testing session and research findings about locked salary content, anonymity, and the requirement to sign up."
+          loading="lazy"
+          width={2022}
+          height={776}
+          className="w-full h-auto mt-5 border border-[#F1F1F1]"
+        />
+        <figcaption className="text-sm text-[#767676] leading-relaxed mt-4">Usability testing explored how users responded to sharing salary information and registering to contribute anonymously.</figcaption>
+      </figure>
 
       <ContentSection label="Experiments" heading="Testing salary information against company reviews">
         <p className={body}>Using Unbounce A/B tests, we compared salary information with company reviews as acquisition messages. We also explored banners, CTA placement, microcopy, recognizable company logos, and audience segments.</p>
@@ -849,14 +868,18 @@ function LoveMondaysBody({ study, onBack }: { study: (typeof caseStudies)[0]; on
         </div>
       </ContentSection>
 
-      <LoveMondaysArtifactGroup
-        category="Acquisition experiments"
-        items={[
-          { title: "Review-led landing page", detail: "A landing-page variant emphasizing company reviews." },
-          { title: "Salary-led landing page", detail: "A comparable variant emphasizing salary information." },
-        ]}
-        caption="Landing-page experiments compared salary information and company reviews as reasons to participate."
-      />
+      <figure className="py-8 md:py-10 border-b border-[#E6E6E6]">
+        <SectionLabel>Acquisition experiments</SectionLabel>
+        <img
+          src="/images/lovemondays-growth/abtest.png"
+          alt="LoveMondays landing-page variants: salary comparison on the left and company reviews on the right, each prompting users to contribute to access information."
+          loading="lazy"
+          width={2022}
+          height={1146}
+          className="w-full h-auto mt-5 border border-[#F1F1F1]"
+        />
+        <figcaption className="text-sm text-[#767676] leading-relaxed mt-4">Landing-page experiments compared salary information and company reviews as reasons to participate.</figcaption>
+      </figure>
 
       <ContentSection label="Design decisions" heading="Simplifying the contribution journey">
         <p className={`${body} mb-6`}>The salary experiments gave us a clearer starting point. I carried that learning into the contribution flow, making the exchange visible and reducing the work required to participate.</p>
@@ -871,35 +894,38 @@ function LoveMondaysBody({ study, onBack }: { study: (typeof caseStudies)[0]; on
 
       <div className="pt-8"><LoveMondaysJourney /></div>
 
-      <LoveMondaysArtifactGroup
-        category="Activation \u00b7 The value exchange"
-        items={[
-          { title: "Preview \u2192 contribute \u2192 unlock", detail: "A sequence showing the content preview, contribution prompt, and access to salary or review information." },
-        ]}
-        caption="The contribution journey connected a preview of useful information with access through sharing."
-      />
+      <figure className="py-8 md:py-10 border-b border-[#E6E6E6]">
+        <SectionLabel>Activation · The value exchange</SectionLabel>
+        <img
+          src="/images/lovemondays-growth/value.png"
+          alt="LoveMondays review and salary previews with restricted content, registration prompts, and an invitation to contribute anonymously to unlock salary information."
+          loading="lazy"
+          width={2022}
+          height={900}
+          className="w-full h-auto mt-5 border border-[#F1F1F1]"
+        />
+        <figcaption className="text-sm text-[#767676] leading-relaxed mt-4">The contribution journey connected a preview of useful information with access through sharing.</figcaption>
+      </figure>
 
-      <LoveMondaysArtifactGroup
-        category="Contribution \u00b7 Form optimization"
-        items={[
-          { title: "Earlier contribution form", detail: "The form before changes informed by usability testing." },
-          { title: "Revised contribution form", detail: "The revised form showing simpler input, clearer choices, or fewer fields." },
-        ]}
-        caption="Usability testing informed changes to contribution fields, choices, and controls."
-      />
+
 
       <ContentSection label="Trust & anonymity" heading="Building trust through anonymity and moderation">
         <p className={body}>Making the form easier addressed effort, but users also needed to know whether sharing was safe. We tested reassurance about anonymity and data use where they hesitated. Examples of published contributions showed what others had shared without being identifiable.</p>
         <p className={`${body} mt-4`}>Behind the interface, every contribution was moderated. The team redacted identifying details before publication if someone accidentally included them. Trust depended on that operational practice as much as the words on screen.</p>
       </ContentSection>
 
-      <LoveMondaysArtifactGroup
-        category="Trust \u00b7 Anonymity"
-        items={[
-          { title: "Anonymity reassurance in context", detail: "A contribution screen with anonymity microcopy, alongside a published contribution example if available." },
-        ]}
-        caption="Anonymity reassurance and published examples helped explain how contributions would appear."
-      />
+      <figure className="py-8 md:py-10 border-b border-[#E6E6E6]">
+        <SectionLabel>Trust · Anonymity</SectionLabel>
+        <img
+          src="/images/lovemondays-growth/forms.png?v=3ee235fe"
+          alt="LoveMondays registration and salary contribution pages with explanations of the community, access to information, and how contributions remain anonymous."
+          loading="lazy"
+          width={2022}
+          height={748}
+          className="w-full h-auto mt-5 border border-[#F1F1F1]"
+        />
+        <figcaption className="text-sm text-[#767676] leading-relaxed mt-4">User feedback informed improvements to the registration pages to reinforce the company positioning and anonymity.</figcaption>
+      </figure>
 
       <ContentSection label="Multi-platform design" heading="Across Desktop and Android App">
         <p className={body}>With developers, I carried the experience across responsive web and Android and reviewed implementation quality. The scope extended from acquisition and content discovery to registration and contribution.</p>
@@ -909,8 +935,8 @@ function LoveMondaysBody({ study, onBack }: { study: (typeof caseStudies)[0]; on
       <LoveMondaysArtifactGroup
         category="Across Desktop and Android App"
         items={[
-          { title: "Desktop experience", detail: "A desktop screen showing company information, salary submission, or contribution choices." },
-          { title: "Android app experience", detail: "The corresponding Android screen showing the same task adapted to mobile navigation and controls." },
+          { title: "Desktop experience", detail: "LoveMondays responsive homepage on desktop and mobile, alongside job details and an employer profile with company reviews.", image: { src: "/images/lovemondays-growth/desktop.png", width: 2026, height: 1233 } },
+          { title: "Android app experience", detail: "LoveMondays Android app onboarding, job search, job details, saved-job guidance, and navigation menu.", image: { src: "/images/lovemondays-growth/androidapp.png", width: 2022, height: 532 } },
         ]}
         caption="Desktop and Android designs supported the same contribution goals across different interfaces."
       />
@@ -923,12 +949,6 @@ function LoveMondaysBody({ study, onBack }: { study: (typeof caseStudies)[0]; on
             ['At company level', 'LoveMondays later became part of Glassdoor. That broader outcome reflected many people and initiatives; it cannot be attributed to an individual experiment or design change.'],
           ].map(([title, text]) => <li key={title}><h3 className="text-base font-medium text-[#3B3B3B] mb-1">{title}</h3><p className={body}>{text}</p></li>)}
         </ul>
-        <p className="text-sm text-[#767676] leading-relaxed mt-6">These results are based on my first-hand account. The precise registration and contribution uplift is no longer available.</p>
-      </ContentSection>
-
-      <ContentSection label="Reflection" heading="What I learned about trust and activation">
-        <p className={body}>Removing fields or moving a CTA only helps when the experience also answers: is the value worth my effort, and is it safe to continue?</p>
-        <p className={`${body} mt-4`}>Today, I would establish clearer instrumentation and keep a record of each experiment and its results. That would help us distinguish changes in effort, perceived value, and confidence, and make the impact of individual decisions easier to evaluate.</p>
       </ContentSection>
 
       <div className="py-12">
@@ -940,7 +960,7 @@ function LoveMondaysBody({ study, onBack }: { study: (typeof caseStudies)[0]; on
   )
 }
 
-type LoveMondaysArtifact = { title: string; detail: string }
+type LoveMondaysArtifact = { title: string; detail: string; image?: { src: string; width: number; height: number } }
 
 function LoveMondaysArtifactGroup({ category, items, caption }: {
   category: string
@@ -950,8 +970,10 @@ function LoveMondaysArtifactGroup({ category, items, caption }: {
   return (
     <figure className="py-8 md:py-10 border-b border-[#E6E6E6]">
       <SectionLabel>{category}</SectionLabel>
-      <div className={`grid gap-5 mt-5 ${items.length > 1 ? 'md:grid-cols-2' : ''}`}>
-        {items.map((item) => (
+      <div className="grid grid-cols-1 gap-5 mt-5">
+        {items.map((item) => item.image ? (
+          <img key={item.title} src={item.image.src} alt={item.detail} width={item.image.width} height={item.image.height} loading="lazy" className="w-full h-auto border border-[#F1F1F1]" />
+        ) : (
           <div key={item.title} className="min-h-[180px] md:min-h-[220px] flex flex-col justify-center bg-[#1A4A2E]/5 border border-dashed border-[#1A4A2E]/35 p-6 md:p-8">
             <p className="text-[12px] tracking-[0.18em] uppercase text-[#767676]">Image placeholder</p>
             <p className="text-[22px] font-light text-[#1A4A2E] leading-tight mt-4">{item.title}</p>
@@ -991,7 +1013,7 @@ function CaseStudyContent({
       </div>
 
       {/* ── Hero image ── */}
-      {study.id !== 'lovemondays-activation' && <div className="max-w-5xl mx-auto px-6 md:px-12 pt-10 pb-4">
+      <div className="max-w-5xl mx-auto px-6 md:px-12 pt-10 pb-4">
         {study.images?.hero ? (
           <img
             src={study.images.hero}
@@ -1001,7 +1023,7 @@ function CaseStudyContent({
         ) : (
           <ImagePlaceholder ratio="16/9" swatchHex={study.swatchHex} />
         )}
-      </div>}
+      </div>
 
       {/* ── Body ── */}
       {study.id === 'lovemondays-activation' ? (
@@ -1280,13 +1302,7 @@ function CaseStudyRow({
               <p className="text-[11px] text-[#767676] mt-2 tracking-wide">Password required</p>
             )}
           </div>
-          {study.id === 'lovemondays-activation' ? (
-            <div className="w-full border-t-2 border-[#1A4A2E] bg-[#1A4A2E]/5 p-8 md:p-10">
-              <SectionLabel>LoveMondays · Activation</SectionLabel>
-              <p className="text-[26px] md:text-[32px] font-light text-[#1A4A2E] leading-tight mt-6">Make value visible.<br />Make sharing feel safe.</p>
-              <p className="text-sm text-[#4A4A4A] leading-relaxed mt-6">Research → Experiments → Contribution</p>
-            </div>
-          ) : study.images?.hero ? (
+          {study.images?.hero ? (
             <img
               src={study.images.hero}
               alt={study.title}
