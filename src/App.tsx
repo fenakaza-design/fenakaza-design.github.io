@@ -144,7 +144,7 @@ const caseStudies = [
     keyDecisions: [],
   },
   {
-    id: 'lovemondays-activation',
+    id: 'lovemondays-growth',
     images: { hero: '/images/lovemondays-growth.png?v=7790f57a' },
     number: '05',
     title: 'LoveMondays Growth Strategy',
@@ -998,11 +998,11 @@ function CaseStudyContent({
   nextStudy: (typeof caseStudies)[0] | null
 }) {
   return (
-    <article role={study.id === 'lovemondays-activation' ? 'main' : undefined}>
+    <article role={study.id === 'lovemondays-growth' ? 'main' : undefined}>
       {/* ── Hero header ── */}
       <div className="pt-14 pb-12 md:pt-20 md:pb-16 border-b border-[#E6E6E6]">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
-          <SectionLabel>{study.client} · {study.id !== 'lovemondays-activation' && <>{study.category} · </>}{study.year}</SectionLabel>
+          <SectionLabel>{study.client} · {study.id !== 'lovemondays-growth' && <>{study.category} · </>}{study.year}</SectionLabel>
           <h1 className="text-[36px] md:text-[52px] lg:text-[60px] font-light text-[#3B3B3B] leading-[1.08] mt-5 mb-6">
             {study.title}
           </h1>
@@ -1026,7 +1026,7 @@ function CaseStudyContent({
       </div>
 
       {/* ── Body ── */}
-      {study.id === 'lovemondays-activation' ? (
+      {study.id === 'lovemondays-growth' ? (
         <LoveMondaysBody study={study} onBack={onBack} />
       ) : study.id === 'validmind' ? (
         <ValidMindBody study={study} onBack={onBack} onNext={onNext} nextStudy={nextStudy} />
@@ -1700,9 +1700,9 @@ function pathToPage(path: string): Page {
     window.history.replaceState(null, '', redirected)
     return pathToPage(redirected)
   }
-  if (path === '/work/lovemondays-experiments') {
-    window.history.replaceState(null, '', '/work/lovemondays-activation')
-    return { type: 'case-study', id: 'lovemondays-activation' }
+  if (path === '/work/lovemondays-experiments' || path === '/work/lovemondays-activation') {
+    window.history.replaceState(null, '', '/work/lovemondays-growth')
+    return { type: 'case-study', id: 'lovemondays-growth' }
   }
   if (path === '/about') return 'about'
   if (path === '/contact') return 'contact'
